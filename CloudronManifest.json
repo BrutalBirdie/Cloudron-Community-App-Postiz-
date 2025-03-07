@@ -1,0 +1,40 @@
+{
+  "id": "com.postiz.cloudronapp",
+  "title": "Postiz",
+  "author": "Postiz Authors",
+  "contactEmail": "support@cloudron.io",
+  "tagline": "social media scheduling tool",
+  "description": "file://DESCRIPTION.md",
+  "upstreamVersion": "1.36.1",
+  "version": "0.1.0",
+  "healthCheckPath": "/",
+  "icon": "file://logo.png",
+  "tags": [
+    "social",
+    "media",
+    "scheduling"
+  ],
+  "memoryLimit": 1048576,
+  "httpPort": 5000,
+  "checklist": {
+    "register-admin": {
+      "message": "On first visit, you can set up an admin user and then create other users."
+    }
+  },
+  "runtimeDirs": [
+     "/app/code/node_modules",
+     "/app/code/dist/apps/frontend/.next/cache"
+  ],
+  "manifestVersion": 2,
+  "minBoxVersion": "8.0.0",
+  "addons": {
+    "localstorage": {},
+    "postgresql": {},
+    "redis": {},
+    "sendmail": {
+      "supportsDisplayName": true
+    }
+  },
+  "website": "https://postiz.com/",
+  "changelog": "file://CHANGELOG"
+}
