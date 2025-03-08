@@ -35,6 +35,11 @@
       "supportsDisplayName": true
     }
   },
+  "mediaLinks": [
+    "https://screenshots.cloudron.io/com.postiz.cloudronapp/main.png",
+    "https://screenshots.cloudron.io/com.postiz.cloudronapp/schedule.png",
+    "https://screenshots.cloudron.io/com.postiz.cloudronapp/analytics.png"
+  ],
   "website": "https://postiz.com/",
   "changelog": "file://CHANGELOG"
 }
