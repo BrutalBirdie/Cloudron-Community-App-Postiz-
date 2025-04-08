@@ -4,3 +4,12 @@
 [0.2.0]
 * Dockerfile refactored
 
+[0.3.0]
+* Update postiz-app to 1.37.3
+* Maximum Message length Telegram increased  
+* Maximum Video Length Instagram increased  
+* Added backend port environment setting  
+* TikTok Images added  
+* refactor(telegram.provider.tsx): increase the maximum message length by [@sdgsnehal](https://github.com/sdgsnehal) in https://github.com/gitroomhq/postiz-app/pull/625  
+* increase maximum video length for instagram to1 80 by [@sdgsnehal](https://github.com/sdgsnehal) in https://github.com/gitroomhq/postiz-app/pull/629
+
