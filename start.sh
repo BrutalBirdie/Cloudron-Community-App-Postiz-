@@ -89,14 +89,11 @@ source /run/postiz/env.sh
 
 export POSTIZ_APPS="frontend workers cron backend"
 
-
-echo "==> Running database migrations"
-npm run prisma-db-push
-#echo "=> Migrate DB"
-#cd ./libraries/nestjs-libraries/src/database/prisma && npx --cache /run/postiz/npm prisma db push --schema schema.prisma
-
 echo "==> Changing ownership"
 chown -R cloudron:cloudron /app/data /run/postiz
+
+echo "==> Running database migrations"
+gosu cloudron:cloudron npm run prisma-db-push
 
 echo "==> Starting Postiz"
 cd /app/code

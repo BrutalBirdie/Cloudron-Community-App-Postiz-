@@ -5,25 +5,16 @@ WORKDIR /app/code
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 
-RUN ln -sf /usr/local/node-${NODE_VERSION}/bin/node /usr/bin/node
-
 RUN apt-get update && \
-    apt-get install -y \
-        caddy \
-        musl-dev && \
-    ln -s /usr/lib/x86_64-linux-musl/libc.so /lib/libc.musl-x86_64.so.1 && \
+    apt-get install -y caddy && \
     rm -r /var/cache/apt /var/lib/apt/lists
 
-# remove all nodejs versions
-RUN find /usr/local -maxdepth 1 -name "node-*" -type d -exec rm -rf {} \;
-
-# install node v20
+# wants node 20 - https://github.com/gitroomhq/postiz-app/blob/main/Dockerfile.dev#L7
 ARG NODE_VERSION=20.18.2
-
 RUN mkdir -p /usr/local/node-${NODE_VERSION} && curl -L https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz | tar zxf - --strip-components 1 -C /usr/local/node-${NODE_VERSION}
+RUN ln -sf /usr/local/node-${NODE_VERSION}/bin/node /usr/bin/node
 ENV PATH="/usr/local/node-${NODE_VERSION}/bin:$PATH"
 
-ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 ENV NEXT_TELEMETRY_DISABLED=1
 
 FROM base AS builder
@@ -32,13 +23,9 @@ WORKDIR /app/code
 
 # renovate: datasource=github-releases depName=gitroomhq/postiz-app versioning=semver extractVersion=^v(?<version>.+)$
 ARG POSTIZ_VERSION=1.37.3
+RUN curl -L "https://github.com/gitroomhq/postiz-app/archive/refs/tags/v${POSTIZ_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /app/code
 
-#RUN curl -L "https://github.com/gitroomhq/postiz-app/archive/refs/tags/v${POSTIZ_VERSION}.tar.gz" | \
-#    tar xzvf - -C /app/code/
-RUN curl -L "https://github.com/gitroomhq/postiz-app/archive/refs/tags/v${POSTIZ_VERSION}.tar.gz" | \
-    tar -xzf - --strip 1 -C /app/code
-
-RUN npm ci --no-fund && npx nx run-many --target=build --projects=frontend,backend,workers,cron
+RUN npm ci --no-update-notifier && npx nx run-many --target=build --projects=frontend,backend,workers,cron
 
 FROM base AS runner
 
@@ -52,11 +39,8 @@ COPY --from=builder --chown=cloudron:cloudron /app/code/node_modules /app/code/n
 COPY --from=builder --chown=cloudron:cloudron /app/code/nx.json /app/code/
 COPY --from=builder --chown=cloudron:cloudron /app/code/package.json /app/code/
 
-# Add supervisor configs
 COPY supervisor/* /etc/supervisor/conf.d/
 RUN ln -sf /run/postiz/supervisord.log /var/log/supervisor/supervisord.log
-
-#RUN chown -R cloudron:cloudron /app/code
 
 COPY start.sh /app/pkg/
 
