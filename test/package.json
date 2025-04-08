@@ -15,10 +15,10 @@
     "mocha": "^11.1.0",
     "rimraf": "^6.0.1",
     "selenium-server-standalone-jar": "^4.29.0",
-    "selenium-webdriver": "^4.29.0",
-    "superagent": "^10.1.1"
+    "selenium-webdriver": "^4.31.0",
+    "superagent": "^10.2.0"
   },
   "dependencies": {
-    "chromedriver": "^134.0.0"
+    "chromedriver": "^135.0.0"
   }
 }
