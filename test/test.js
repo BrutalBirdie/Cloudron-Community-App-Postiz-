@@ -19,7 +19,7 @@ describe('Application life cycle test', function () {
     this.timeout(0);
 
     const LOCATION = process.env.LOCATION || 'test';
-    const TIMEOUT = parseInt(process.env.TIMEOUT, 10) || 20000;
+    const TIMEOUT = parseInt(process.env.TIMEOUT, 10) || 40000;
     const EXEC_ARGS = { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' };
 
     let browser, app;
@@ -97,7 +97,7 @@ describe('Application life cycle test', function () {
         await browser.sleep(2000);
         await browser.findElement(By.xpath('//button[@type="submit"]')).click();
         await browser.sleep(2000);
-        await waitForElement(By.xpath('//a[contains(@href, "launches")]'));
+        await waitForElement(By.xpath('//a[contains(@href, "launches")]')); // the Calendar
     }
 
     async function logout() {
@@ -113,6 +113,7 @@ describe('Application life cycle test', function () {
         await waitForElement(By.xpath('//button[contains(., "Add a signature")]'));
         await browser.findElement(By.xpath('//button[contains(., "Add a signature")]')).click();
 
+        await waitForElement(By.xpath('//div[@role="textbox"]'));
         await browser.findElement(By.xpath('//div[@role="textbox"]')).sendKeys(signature);
         await browser.findElement(By.xpath('//button[@type="submit" and contains(., "Save")]')).click();
 
@@ -143,7 +144,8 @@ describe('Application life cycle test', function () {
     it('disable email notifications (activation emails)', async function () {
         await removeEmailProvider();
         execSync(`cloudron restart --app ${app.id}`);
-        await browser.sleep(20000);
+        console.log('waiting for 20 seconds after app restart');
+        await browser.sleep(40000);
     });
 
     it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
@@ -157,7 +159,8 @@ describe('Application life cycle test', function () {
 
     it('can restart app', async function () {
         execSync(`cloudron restart --app ${app.id}`);
-        await browser.sleep(20000);
+        console.log('waiting for 20 seconds after app restart');
+        await browser.sleep(40000);
     });
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
@@ -174,7 +177,8 @@ describe('Application life cycle test', function () {
         execSync('cloudron install --no-sso --location ' + LOCATION, EXEC_ARGS);
         getAppInfo();
         execSync(`cloudron restore --backup ${backups[0].id} --app ${app.id}`, EXEC_ARGS);
-        await browser.sleep(20000);
+        console.log('waiting for 20 seconds after app restart');
+        await browser.sleep(40000);
     });
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
@@ -186,7 +190,8 @@ describe('Application life cycle test', function () {
         execSync(`cloudron configure --app ${app.id} --location ${LOCATION}2`, EXEC_ARGS);
 
         getAppInfo();
-        await browser.sleep(20000);
+        console.log('waiting for 20 seconds after app restart');
+        await browser.sleep(40000);
     });
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
@@ -197,18 +202,19 @@ describe('Application life cycle test', function () {
         execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
     });
 
-/*
     // test update
-    it('can install app', function () {
+    it('can install app', async function () {
         execSync('cloudron install --no-sso --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS);
-        await browser.sleep(20000);
+        console.log('waiting for 20 seconds after app restart');
+        await browser.sleep(40000);
         getAppInfo();
     });
 
     it('disable email notifications (activation emails)', async function () {
         await removeEmailProvider();
         execSync(`cloudron restart --app ${app.id}`);
-        await browser.sleep(20000);
+        console.log('waiting for 20 seconds after app restart');
+        await browser.sleep(40000);
     });
 
     it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
@@ -220,9 +226,10 @@ describe('Application life cycle test', function () {
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
-    it('can update', function () {
+    it('can update', async function () {
         execSync('cloudron update --app ' + LOCATION, EXEC_ARGS);
-        await browser.sleep(20000);
+        console.log('waiting for 20 seconds after app restart');
+        await browser.sleep(40000);
     });
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
@@ -232,5 +239,4 @@ describe('Application life cycle test', function () {
     it('uninstall app', function () {
         execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
     });
-*/    
 });
