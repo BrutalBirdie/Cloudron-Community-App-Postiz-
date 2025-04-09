@@ -59,7 +59,11 @@ describe('Application life cycle test', function () {
     async function clearCache() {
         await browser.manage().deleteAllCookies();
         await browser.quit();
-        await startBrowser();
+        browser = null;
+        const chromeOptions = new Options().windowSize({ width: 1280, height: 1024 });
+        if (process.env.CI) chromeOptions.addArguments('no-sandbox', 'disable-dev-shm-usage', 'headless');
+        chromeOptions.addArguments(`--user-data-dir=${await fs.promises.mkdtemp('/tmp/test-')}`); // --profile-directory=Default
+        browser = new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
     }
 
     async function startBrowser() {
@@ -203,7 +207,7 @@ describe('Application life cycle test', function () {
     });
 
     // test update
-    it('can install app', async function () {
+    it('can install app for update', async function () {
         execSync('cloudron install --no-sso --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS);
         console.log('waiting for 20 seconds after app restart');
         await browser.sleep(40000);
