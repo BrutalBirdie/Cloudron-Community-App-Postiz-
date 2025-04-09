@@ -11,7 +11,7 @@ if [[ ! -f /app/data/env.sh ]]; then
     jwt_secret=$(pwgen -1s 64)
     cat > /app/data/env.sh <<EOT
 # See all settings at https://github.com/gitroomhq/postiz-app/blob/main/.env.example
-export DISABLE_REGISTRATION=false
+export DISABLE_REGISTRATION=some-nonempty-value
 export JWT_SECRET="${jwt_secret}"
 export EMAIL_PROVIDER="nodemailer"
 EOT
