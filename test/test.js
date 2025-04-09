@@ -28,7 +28,7 @@ describe('Application life cycle test', function () {
     const ADMIN_PASSWORD = 'changeme123';
 
     const COMPANY_NAME = 'Cloudron';
-    const SIGNATURE_TEXT = 'CloudronSignatureText';
+    const SIGNATURE_TEXT = 'AM30'; // keep this short! text gets elided and tests fail
 
     before(async function () {
         await startBrowser();
