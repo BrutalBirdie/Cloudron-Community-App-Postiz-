@@ -13,3 +13,6 @@
 * refactor(telegram.provider.tsx): increase the maximum message length by [@sdgsnehal](https://github.com/sdgsnehal) in https://github.com/gitroomhq/postiz-app/pull/625  
 * increase maximum video length for instagram to1 80 by [@sdgsnehal](https://github.com/sdgsnehal) in https://github.com/gitroomhq/postiz-app/pull/629
 
+[0.4.0]
+* Various packaging cleanups
+
