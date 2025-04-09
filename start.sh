@@ -10,47 +10,10 @@ if [[ ! -f /app/data/env.sh ]]; then
 
     jwt_secret=$(pwgen -1s 64)
     cat > /app/data/env.sh <<EOT
+# See all settings at https://github.com/gitroomhq/postiz-app/blob/main/.env.example
 export DISABLE_REGISTRATION=false
 export JWT_SECRET="${jwt_secret}"
-
-# set EMAIL_PROVIDER="nodemailer" to enable user activation, set it blank to disable
 export EMAIL_PROVIDER="nodemailer"
-
-export OPENAI_API_KEY=""
-
-# Social Media API Settings
-export X_API_KEY=""
-export X_API_SECRET=""
-export X_CLIENT=""
-export X_SECRET=""
-export LINKEDIN_CLIENT_ID=""
-export LINKEDIN_CLIENT_SECRET=""
-export REDDIT_CLIENT_ID=""
-export REDDIT_CLIENT_SECRET=""
-export GITHUB_CLIENT_ID=""
-export GITHUB_CLIENT_SECRET=""
-export BEEHIIVE_API_KEY=""
-export BEEHIIVE_PUBLICATION_ID=""
-export THREADS_APP_ID=""
-export THREADS_APP_SECRET=""
-export FACEBOOK_APP_ID=""
-export FACEBOOK_APP_SECRET=""
-export YOUTUBE_CLIENT_ID=""
-export YOUTUBE_CLIENT_SECRET=""
-export TIKTOK_CLIENT_ID=""
-export TIKTOK_CLIENT_SECRET=""
-export PINTEREST_CLIENT_ID=""
-export PINTEREST_CLIENT_SECRET=""
-export DRIBBBLE_CLIENT_ID=""
-export DRIBBBLE_CLIENT_SECRET=""
-export DISCORD_CLIENT_ID=""
-export DISCORD_CLIENT_SECRET=""
-export DISCORD_BOT_TOKEN_ID=""
-export SLACK_ID=""
-export SLACK_SECRET=""
-export SLACK_SIGNING_SECRET=""
-export MASTODON_CLIENT_ID=""
-export MASTODON_CLIENT_SECRET=""
 EOT
 fi
 
