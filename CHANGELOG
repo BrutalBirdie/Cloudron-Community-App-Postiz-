@@ -16,3 +16,6 @@
 [0.4.0]
 * Various packaging cleanups
 
+[0.5.0]
+* cleanup unused exports in env.sh file
+
