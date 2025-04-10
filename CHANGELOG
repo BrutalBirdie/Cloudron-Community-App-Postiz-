@@ -19,3 +19,6 @@
 [0.5.0]
 * cleanup unused exports in env.sh file
 
+[0.6.0]
+* Fix misleading DISABLE_REGISTRATION value
+
