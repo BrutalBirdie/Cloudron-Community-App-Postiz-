@@ -22,7 +22,7 @@ FROM base AS builder
 WORKDIR /app/code
 
 # renovate: datasource=github-releases depName=gitroomhq/postiz-app versioning=semver extractVersion=^v(?<version>.+)$
-ARG POSTIZ_VERSION=1.37.3
+ARG POSTIZ_VERSION=1.37.4
 RUN curl -L "https://github.com/gitroomhq/postiz-app/archive/refs/tags/v${POSTIZ_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /app/code
 
 RUN npm ci --no-update-notifier && npx nx run-many --target=build --projects=frontend,backend,workers,cron
