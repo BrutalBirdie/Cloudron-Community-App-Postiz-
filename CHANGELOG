@@ -22,3 +22,8 @@
 [0.6.0]
 * Fix misleading DISABLE_REGISTRATION value
 
+[0.6.1]
+* Update postiz-app to 1.37.4
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.37.4)
+* Fixed TikTok and Bluesky
+
