@@ -27,3 +27,17 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.37.4)
 * Fixed TikTok and Bluesky
 
+[0.7.0]
+* Update postiz-app to 1.39.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.39.1)
+* Fix package json for MCPs  
+* You can now connect your claude / cursor to Postiz. Check it in the public API.  
+* First version of MCPs by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/698  
+* Fix instagram permission from impressions to views, fix md remover mess up the message  
+* Fixed aws-sdk and peer conflicts by [@talkenigs](https://github.com/talkenigs)  
+* Caching for Jenkins by [@egelhaus](https://github.com/egelhaus)  
+* Fix aws-sdk & langcahin/community peer dependencies conflicts by [@talkenigs](https://github.com/talkenigs) in https://github.com/gitroomhq/postiz-app/pull/683  
+* Jenk cache by [@egelhaus](https://github.com/egelhaus) in https://github.com/gitroomhq/postiz-app/pull/688  
+* fix conflicts (override "dev" package jsons with "main" package jsons) by [@egelhaus](https://github.com/egelhaus) in https://github.com/gitroomhq/postiz-app/pull/694  
+* WIP: v1.38.1 by [@egelhaus](https://github.com/egelhaus) in https://github.com/gitroomhq/postiz-app/pull/674
+
