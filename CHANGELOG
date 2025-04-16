@@ -41,3 +41,7 @@
 * fix conflicts (override "dev" package jsons with "main" package jsons) by [@egelhaus](https://github.com/egelhaus) in https://github.com/gitroomhq/postiz-app/pull/694  
 * WIP: v1.38.1 by [@egelhaus](https://github.com/egelhaus) in https://github.com/gitroomhq/postiz-app/pull/674
 
+[0.7.1]
+* Update postiz-app to 1.39.2
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.39.2)
+
