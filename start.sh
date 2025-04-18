@@ -35,8 +35,6 @@ export UPLOAD_DIRECTORY="/app/data/data"
 
 export NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY="/app/data/data"
 
-export NOT_SECURED=false
-
 export NX_ADD_PLUGINS=false
 export IS_GENERAL="true"
 
