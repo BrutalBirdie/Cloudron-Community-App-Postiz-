@@ -50,3 +50,6 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.39.3)
 * Threads fixes for posts attachements, fixed login
 
+[0.8.0]
+* Fix logout by not setting NOT_SECURED at all
+
