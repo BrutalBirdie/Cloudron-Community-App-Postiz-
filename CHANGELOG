@@ -53,3 +53,9 @@
 [0.8.0]
 * Fix logout by not setting NOT_SECURED at all
 
+[0.9.0]
+* Update postiz-app to 1.40.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.40.1)
+* Fixed VK by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/707
+* Added VK by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/706
+
