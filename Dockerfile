@@ -42,6 +42,8 @@ COPY --from=builder --chown=cloudron:cloudron /app/code/package.json /app/code/
 COPY supervisor/* /etc/supervisor/conf.d/
 RUN ln -sf /run/postiz/supervisord.log /var/log/supervisor/supervisord.log
 
+COPY Caddyfile /app/code/Caddyfile
+
 COPY start.sh /app/pkg/
 
 CMD [ "/app/pkg/start.sh" ]
