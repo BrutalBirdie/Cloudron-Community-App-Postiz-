@@ -19,6 +19,6 @@
     "superagent": "^10.2.0"
   },
   "dependencies": {
-    "chromedriver": "^135.0.2"
+    "chromedriver": "^135.0.4"
   }
 }
