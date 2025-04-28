@@ -62,3 +62,9 @@
 [0.9.1]
 * fix: Make caddy handle UPLOAD_DIRECTORY var as root of /uploads/*
 
+[0.10.0]
+* Update postiz-app to 1.41.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.41.0)
+* Option to merge all comments into one post by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/719
+* Added env Variable `API_LIMIT`to set the maximum requests per user per hour for the public API
+
