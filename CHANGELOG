@@ -68,3 +68,9 @@
 * Option to merge all comments into one post by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/719
 * Added env Variable `API_LIMIT`to set the maximum requests per user per hour for the public API
 
+[0.10.1]
+* Update postiz-app to 1.41.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.41.1)
+* Linkedin didn't repost with the plugs.  
+* We have changed the route from v2 back to rest.
+
