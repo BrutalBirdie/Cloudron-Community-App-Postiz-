@@ -74,3 +74,8 @@
 * Linkedin didn't repost with the plugs.  
 * We have changed the route from v2 back to rest.
 
+[0.11.0]
+* Update postiz-app to 1.42.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.42.1)
+* Thanks to [@DrummyFloyd](https://github.com/DrummyFloyd) on [#701](https://github.com/gitroomhq/postiz-app/issues/701) and [#550](https://github.com/gitroomhq/postiz-app/issues/550) we now have the capability to use an OIDC / OAuth 2.0
+
