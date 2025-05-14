@@ -17,6 +17,9 @@ ENV PATH="/usr/local/node-${NODE_VERSION}/bin:$PATH"
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# https://github.com/gitroomhq/postiz-app/blob/main/Dockerfile.dev#L3
+RUN npm --no-update-notifier --no-fund --global install pnpm@10.6.1 pm2
+
 FROM base AS builder
 
 WORKDIR /app/code
@@ -25,18 +28,17 @@ WORKDIR /app/code
 ARG POSTIZ_VERSION=1.43.2
 RUN curl -L "https://github.com/gitroomhq/postiz-app/archive/refs/tags/v${POSTIZ_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /app/code
 
-RUN npm ci --no-update-notifier && npx nx run-many --target=build --projects=frontend,backend,workers,cron
+RUN pnpm install
+RUN pnpm run build
 
 FROM base AS runner
 
 WORKDIR /app/code
-
+COPY --from=builder --chown=cloudron:cloudron /app/code/apps /app/code/apps
 COPY --from=builder --chown=cloudron:cloudron /app/code/.env.example /app/code/
 COPY --from=builder --chown=cloudron:cloudron /app/code/var/docker/Caddyfile /app/code/
-COPY --from=builder --chown=cloudron:cloudron /app/code/dist /app/code/dist
 COPY --from=builder --chown=cloudron:cloudron /app/code/libraries /app/code/libraries
 COPY --from=builder --chown=cloudron:cloudron /app/code/node_modules /app/code/node_modules
-COPY --from=builder --chown=cloudron:cloudron /app/code/nx.json /app/code/
 COPY --from=builder --chown=cloudron:cloudron /app/code/package.json /app/code/
 
 COPY supervisor/* /etc/supervisor/conf.d/
