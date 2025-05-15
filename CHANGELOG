@@ -79,3 +79,11 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.42.1)
 * Thanks to [@DrummyFloyd](https://github.com/DrummyFloyd) on [#701](https://github.com/gitroomhq/postiz-app/issues/701) and [#550](https://github.com/gitroomhq/postiz-app/issues/550) we now have the capability to use an OIDC / OAuth 2.0
 
+[0.12.0]
+* Update postiz-app to 1.43.2
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.43.2)
+* Intial release of chrome extension by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/735
+* fix(oidc): remove trailling / needed but add by User & Missing Oauth on /auth by [@DrummyFloyd](https://github.com/DrummyFloyd) in https://github.com/gitroomhq/postiz-app/pull/736
+* Urgent Fix: undefined resolver doesn&#x27;t let to schedule a post
+* Moving to pnpm and ditching nx by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/727
+
