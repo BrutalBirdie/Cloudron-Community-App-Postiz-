@@ -87,3 +87,8 @@
 * Urgent Fix: undefined resolver doesn&#x27;t let to schedule a post
 * Moving to pnpm and ditching nx by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/727
 
+[0.12.1]
+* Update postiz-app to 1.43.3
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.43.3)
+* It seems like after upgrading to pnpm react-hook-form not loading properly.
+
