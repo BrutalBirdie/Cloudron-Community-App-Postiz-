@@ -92,3 +92,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.43.3)
 * It seems like after upgrading to pnpm react-hook-form not loading properly.
 
+[0.12.2]
+* Update postiz-app to 1.43.4
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.43.4)
+* [`v1.43.4`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.43.4): Fix redirect back after adding a channel
+
