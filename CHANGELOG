@@ -97,3 +97,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.43.4)
 * [`v1.43.4`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.43.4): Fix redirect back after adding a channel
 
+[0.12.3]
+* Update postiz-app to 1.43.5
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.43.5)
+* Disable image compression variable by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/750
+
