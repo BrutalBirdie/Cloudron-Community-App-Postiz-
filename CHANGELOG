@@ -108,3 +108,9 @@
 * feat(short-linking): make Dub provider configurable for self-hosting by [@&#8203;eddywashere](https://github.com/eddywashere) in https://github.com/gitroomhq/postiz-app/pull/751
 * feat: Move https://mastodon.social to env variable for ability to cha by [@&#8203;halkeye](https://github.com/halkeye) in https://github.com/gitroomhq/postiz-app/pull/708
 
+[0.13.1]
+* Update postiz-app to 1.44.2
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.44.2)
+* Instagram standalone insights by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/754
+* Threads refresh token by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/758
+
