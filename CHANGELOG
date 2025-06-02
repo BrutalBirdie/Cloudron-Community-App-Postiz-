@@ -114,3 +114,8 @@
 * Instagram standalone insights by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/754
 * Threads refresh token by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/758
 
+[1.0.0]
+* Update postiz-app to 1.45.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.45.1)
+* Added multi-language option by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/770
+
