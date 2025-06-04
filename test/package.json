@@ -14,11 +14,11 @@
     "mkdirp": "^3.0.1",
     "mocha": "^11.5.0",
     "rimraf": "^6.0.1",
-    "selenium-server-standalone-jar": "^4.29.0",
+    "selenium-server-standalone-jar": "^4.33.0",
     "selenium-webdriver": "^4.33.0",
     "superagent": "^10.2.1"
   },
   "dependencies": {
-    "chromedriver": "^137.0.0"
+    "chromedriver": "^137.0.1"
   }
 }
