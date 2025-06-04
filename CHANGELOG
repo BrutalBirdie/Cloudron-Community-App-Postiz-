@@ -119,3 +119,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.45.1)
 * Added multi-language option by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/770
 
+[1.1.0]
+* Update postiz-app to 1.46.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.46.0)
+* You can now add an extra post after all the posts that quote the 1st post and ask people to follow you.
+
