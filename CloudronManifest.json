@@ -41,7 +41,7 @@
     "https://screenshots.cloudron.io/com.postiz.cloudronapp/analytics.png"
   ],
   "forumUrl": "https://forum.cloudron.io/category/205/postiz",
-  "documentationUrl": "https://docs.cloudron.io/apps/postiz",
+  "documentationUrl": "https://docs.cloudron.io/packages/postiz",
   "website": "https://postiz.com/",
   "changelog": "file://CHANGELOG"
 }
