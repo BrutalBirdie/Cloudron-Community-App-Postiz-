@@ -141,3 +141,10 @@
 * Fix pnpx by [@ennogelhaus](https://github.com/ennogelhaus) in https://github.com/gitroomhq/postiz-app/pull/785
 * LinkedIn post as carousel by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/786
 
+[1.4.0]
+* Update postiz-app to 1.49.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.49.1)
+* [`v1.49.1`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.49.1): Fix &quot;edit only&quot; provider, after adding the sets feature
+* [`v1.49.0`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.49.0): New Feature: Sets
+* You can now create Sets in the settings page.
+
