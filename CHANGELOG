@@ -148,3 +148,8 @@
 * [`v1.49.0`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.49.0): New Feature: Sets
 * You can now create Sets in the settings page.
 
+[1.5.0]
+* Update postiz-app to 1.50.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.50.0)
+* Convert a post to multiple posts with AI
+
