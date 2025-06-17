@@ -153,3 +153,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.50.0)
 * Convert a post to multiple posts with AI
 
+[1.6.0]
+* Update postiz-app to 1.51.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.51.0)
+* Added an option to select who can reply to your post on X
+
