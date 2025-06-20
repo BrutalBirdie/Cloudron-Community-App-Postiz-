@@ -166,3 +166,8 @@
 * The long-awaited feature is here!  
 * You can now upload videos to Bluesky!
 
+[1.7.1]
+* Update postiz-app to 1.52.2
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.52.2)
+* Fixed uploading large files
+
