@@ -171,3 +171,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.52.2)
 * Fixed uploading large files
 
+[1.8.0]
+* Update postiz-app to 1.54.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.54.0)
+* Add Integrations by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/833
+
