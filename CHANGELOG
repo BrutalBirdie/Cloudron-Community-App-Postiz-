@@ -176,3 +176,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.54.0)
 * Add Integrations by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/833
 
+[1.8.1]
+* Update postiz-app to 1.54.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.54.1)
+* Uploading videos was set to a lower number, changed to 1gb.
+
