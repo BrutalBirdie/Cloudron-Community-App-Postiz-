@@ -193,3 +193,8 @@
 * Validation works 10x better
 * Removed the weird "useValues"; it is now working with useImperativeHandle.
 
+[1.9.1]
+* Update postiz-app to 1.55.5
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.55.5)
+* Total chars next to editor fix
+
