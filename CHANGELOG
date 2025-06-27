@@ -181,3 +181,15 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.54.1)
 * Uploading videos was set to a lower number, changed to 1gb.
 
+[1.9.0]
+* Update postiz-app to 1.55.3
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.55.3)
+* [`v1.55.3`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.55.3): Fixed weighted problem on X + added char counter
+* [`v1.55.2`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.55.2): Fix removal of internal when returning back from global mode
+* [`v1.55.1`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.55.1): Fixed Dribble and Nostr to work with the new Modal
+* [`v1.55.0`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.55.0): New Modal Creation Dialog
+* Removed the "edit" only this, it is now just a new tab with an edit button.
+* Move everything to a global state with Zustand.
+* Validation works 10x better
+* Removed the weird "useValues"; it is now working with useImperativeHandle.
+
