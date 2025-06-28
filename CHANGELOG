@@ -198,3 +198,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.55.5)
 * Total chars next to editor fix
 
+[1.10.0]
+* Update postiz-app to 1.56.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.56.0)
+* We have revamped the drag-and-drop and paste image features in the new editor.
+
