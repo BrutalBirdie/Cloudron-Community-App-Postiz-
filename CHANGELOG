@@ -203,3 +203,11 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.56.0)
 * We have revamped the drag-and-drop and paste image features in the new editor.
 
+[1.11.0]
+* Update postiz-app to 1.57.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.57.0)
+* Change the order of pictures - When creating a new post, after uploading an image, you can rearrange the order of the images.
+* Fix TikTok API - Since some restrictions were not accepted when using the TikTok API, it fell back to not posting captions; now fixed.
+* "post/comment" text - under each post, showing the correct label, depending on the platform.
+* Better uploading progress - ditching Uppy ProgressBar for Uppy Dashboard with some hacks.
+
