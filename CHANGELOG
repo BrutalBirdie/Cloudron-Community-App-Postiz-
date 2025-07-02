@@ -211,3 +211,8 @@
 * "post/comment" text - under each post, showing the correct label, depending on the platform.
 * Better uploading progress - ditching Uppy ProgressBar for Uppy Dashboard with some hacks.
 
+[1.12.0]
+* Update postiz-app to 1.58.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.58.0)
+* Thumbnails and alt by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/851
+
