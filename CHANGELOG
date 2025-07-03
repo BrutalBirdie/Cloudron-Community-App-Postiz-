@@ -216,3 +216,9 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.58.0)
 * Thumbnails and alt by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/851
 
+[1.13.0]
+* Update postiz-app to 1.59.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.59.0)
+* Schedule a post from the specific social platform menu
+* Fixes for threads - required to have at least one media, it's a mistake.
+
