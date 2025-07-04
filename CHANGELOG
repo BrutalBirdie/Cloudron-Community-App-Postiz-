@@ -222,3 +222,10 @@
 * Schedule a post from the specific social platform menu
 * Fixes for threads - required to have at least one media, it's a mistake.
 
+[1.14.0]
+* Update postiz-app to 1.60.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.60.1)
+* Adding dates on week view  
+* Today button  
+* feat: add LinkDrip provider for short linking service by [@Mokkapps](https://github.com/Mokkapps) in https://github.com/gitroomhq/postiz-app/pull/836
+
