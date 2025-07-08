@@ -229,3 +229,6 @@
 * Today button  
 * feat: add LinkDrip provider for short linking service by [@Mokkapps](https://github.com/Mokkapps) in https://github.com/gitroomhq/postiz-app/pull/836
 
+[1.14.1]
+* chore(deps): update dependency gitroomhq/postiz-app to v1.61.3
+
