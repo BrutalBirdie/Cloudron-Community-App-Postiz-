@@ -138,8 +138,8 @@ describe('Application life cycle test', function () {
         await waitForElement(By.xpath(`//div[contains(., "${signature}")]`));
     }
 
-    async function removeEmailProvider() {
-        execSync(`cloudron exec --app ${app.id} -- sed \'/.*EMAIL_PROVIDER="nodemailer"/d\' -i /app/data/env.sh`);
+    async function removeEmailProvider(env_file = '/app/data/env') {
+        execSync(`cloudron exec --app ${app.id} -- sed \'/.*EMAIL_PROVIDER="nodemailer"/d\' -i ${env_file}`);
     }
 
     xit('build app', function () {
@@ -220,7 +220,8 @@ describe('Application life cycle test', function () {
     });
 
     it('disable email notifications (activation emails)', async function () {
-        await removeEmailProvider();
+        // change the param value to '/app/data/env' on the next release
+        await removeEmailProvider('/app/data/env.sh');
         execSync(`cloudron restart --app ${app.id}`);
         console.log('waiting for 20 seconds after app restart');
         await browser.sleep(40000);

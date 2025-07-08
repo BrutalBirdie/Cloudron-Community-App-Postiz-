@@ -28,10 +28,17 @@ WORKDIR /app/code
 ARG POSTIZ_VERSION=1.61.3
 RUN curl -L "https://github.com/gitroomhq/postiz-app/archive/refs/tags/v${POSTIZ_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /app/code
 
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN pnpm config set cache /run/npm-cache && \
+    pnpm config set userconfig /run/npm-config/npmrc
+
 RUN pnpm install
 RUN pnpm run build
 
 FROM base AS runner
+
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV PATH=$PATH:/app/code/node_modules/.bin
 
 WORKDIR /app/code
 COPY --from=builder --chown=cloudron:cloudron /app/code/apps /app/code/apps
@@ -40,6 +47,8 @@ COPY --from=builder --chown=cloudron:cloudron /app/code/var/docker/Caddyfile /ap
 COPY --from=builder --chown=cloudron:cloudron /app/code/libraries /app/code/libraries
 COPY --from=builder --chown=cloudron:cloudron /app/code/node_modules /app/code/node_modules
 COPY --from=builder --chown=cloudron:cloudron /app/code/package.json /app/code/
+
+RUN ln -sf /run/postiz/env /app/code/.env
 
 COPY supervisor/* /etc/supervisor/conf.d/
 RUN ln -sf /run/postiz/supervisord.log /var/log/supervisor/supervisord.log

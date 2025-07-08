@@ -5,7 +5,7 @@
   "contactEmail": "support@cloudron.io",
   "tagline": "social media scheduling tool",
   "description": "file://DESCRIPTION.md",
-  "upstreamVersion": "1.52.2",
+  "upstreamVersion": "1.61.3",
   "version": "1.14.1",
   "healthCheckPath": "/",
   "icon": "file://logo.png",
@@ -23,7 +23,7 @@
   },
   "runtimeDirs": [
     "/app/code/node_modules",
-    "/app/code/dist/apps/frontend/.next/cache"
+    "/app/code/apps/frontend/.next/cache"
   ],
   "manifestVersion": 2,
   "minBoxVersion": "8.0.0",
