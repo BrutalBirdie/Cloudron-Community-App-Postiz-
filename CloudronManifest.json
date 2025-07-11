@@ -5,7 +5,7 @@
   "contactEmail": "support@cloudron.io",
   "tagline": "social media scheduling tool",
   "description": "file://DESCRIPTION.md",
-  "upstreamVersion": "1.62.0",
+  "upstreamVersion": "1.62.2",
   "version": "1.14.2",
   "healthCheckPath": "/",
   "icon": "file://logo.png",
@@ -14,7 +14,7 @@
     "media",
     "scheduling"
   ],
-  "memoryLimit": 536870912,
+  "memoryLimit": 4294967296,
   "httpPort": 5000,
   "checklist": {
     "register-admin": {

@@ -79,12 +79,39 @@ describe('Application life cycle test', function () {
         await browser.wait(until.elementIsVisible(browser.findElement(elem)), TIMEOUT);
     }
 
+    async function waitForApp(elem = '') {
+        elem = elem || By.xpath('//*[@name="email"] | //a[contains(@href, "launches")]');
+        let elementIsVisible = false;
+
+        await browser.get(`https://${app.fqdn}/auth/login`);
+
+        do {
+            try {
+                await waitForElement(elem);
+                elementIsVisible = await browser.findElement(elem).isDisplayed();
+                console.log('Frontend started? => ' + elementIsVisible);
+            }
+            catch(err) {
+                // refresh the web page
+                console.log('Refreshing the page');
+                await browser.navigate().refresh();
+                await browser.sleep(5000);
+            }
+        } while (!elementIsVisible);
+
+        // todo: check API is ready
+        console.log('Waiting for 40 seconds to start app services (backend, worker, cron)');
+        await browser.sleep(40000);
+    }
+
     async function register(email, password) {
         await browser.get(`https://${app.fqdn}/auth`);
 
-        await waitForElement(By.xpath('//*[@name="email"]'));
+        await waitForElement(By.xpath('//input[@name="email"]'));
         await browser.findElement(By.xpath('//input[@name="email"]')).sendKeys(email);
+        await browser.sleep(1000);
         await browser.findElement(By.xpath('//input[@name="password"]')).sendKeys(password);
+        await browser.sleep(1000);
         await browser.findElement(By.xpath('//input[@name="company"]')).sendKeys(COMPANY_NAME);
         await browser.sleep(2000);
         await browser.findElement(By.xpath('//button[@type="submit"]')).click();
@@ -95,8 +122,9 @@ describe('Application life cycle test', function () {
     async function login(email, password) {
         await browser.get(`https://${app.fqdn}/auth/login`);
 
-        await waitForElement(By.xpath('//*[@name="email"]'));
+        await waitForElement(By.xpath('//input[@name="email"]'));
         await browser.findElement(By.xpath('//input[@name="email"]')).sendKeys(email);
+        await browser.sleep(1000);
         await browser.findElement(By.xpath('//input[@name="password"]')).sendKeys(password);
         await browser.sleep(2000);
         await browser.findElement(By.xpath('//button[@type="submit"]')).click();
@@ -153,9 +181,8 @@ describe('Application life cycle test', function () {
     it('disable email notifications (activation emails)', async function () {
         await removeEmailProvider();
         execSync(`cloudron restart --app ${app.id}`);
-        console.log('waiting for 20 seconds after app restart');
-        await browser.sleep(40000);
     });
+    it('wait for all services', async function () { await waitForApp(); });
 
     it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
     it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
@@ -168,9 +195,8 @@ describe('Application life cycle test', function () {
 
     it('can restart app', async function () {
         execSync(`cloudron restart --app ${app.id}`);
-        console.log('waiting for 20 seconds after app restart');
-        await browser.sleep(40000);
     });
+    it('wait for all services', async function () { await waitForApp(); });
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
@@ -186,9 +212,9 @@ describe('Application life cycle test', function () {
         execSync('cloudron install --no-sso --location ' + LOCATION, EXEC_ARGS);
         getAppInfo();
         execSync(`cloudron restore --backup ${backups[0].id} --app ${app.id}`, EXEC_ARGS);
-        console.log('waiting for 20 seconds after app restart');
-        await browser.sleep(40000);
     });
+    it('wait for all services', async function () { await waitForApp(); });
+
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
@@ -197,11 +223,9 @@ describe('Application life cycle test', function () {
         // ensure we don't hit NXDOMAIN in the mean time
         await browser.get('about:blank');
         execSync(`cloudron configure --app ${app.id} --location ${LOCATION}2`, EXEC_ARGS);
-
         getAppInfo();
-        console.log('waiting for 20 seconds after app restart');
-        await browser.sleep(40000);
     });
+    it('wait for all services', async function () { await waitForApp(); });
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
@@ -212,22 +236,18 @@ describe('Application life cycle test', function () {
     });
 
     // test update
-    it('can install app for update', async function () {
-        execSync('cloudron install --no-sso --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS);
-        console.log('waiting for 20 seconds after app restart');
-        await browser.sleep(40000);
-        getAppInfo();
-    });
+    it('can install app for update', async function () { execSync('cloudron install -m 1Gb --no-sso --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS); });
+    it('can get app information', getAppInfo);
 
     it('disable email notifications (activation emails)', async function () {
-        // change the param value to '/app/data/env' on the next release
-        await removeEmailProvider('/app/data/env.sh');
+        await removeEmailProvider();
         execSync(`cloudron restart --app ${app.id}`);
-        console.log('waiting for 20 seconds after app restart');
-        await browser.sleep(40000);
     });
 
+    it('wait for all services', async function () { await waitForApp(); });
+
     it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
+
     it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
@@ -236,13 +256,12 @@ describe('Application life cycle test', function () {
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
-    it('can update', async function () {
-        execSync('cloudron update --app ' + LOCATION, EXEC_ARGS);
-        console.log('waiting for 20 seconds after app restart');
-        await browser.sleep(40000);
-    });
+    it('can update', async function () { execSync('cloudron update --app ' + LOCATION, EXEC_ARGS); });
+
+    it('wait for all services', async function () { await waitForApp(); });
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
+
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
