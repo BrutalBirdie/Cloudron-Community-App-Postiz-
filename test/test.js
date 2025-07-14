@@ -236,7 +236,7 @@ describe('Application life cycle test', function () {
     });
 
     // test update
-    it('can install app for update', async function () { execSync('cloudron install -m 1Gb --no-sso --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS); });
+    it('can install app for update', async function () { execSync('cloudron install --no-sso --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS); });
     it('can get app information', getAppInfo);
 
     it('disable email notifications (activation emails)', async function () {

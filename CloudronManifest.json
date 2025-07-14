@@ -14,7 +14,7 @@
     "media",
     "scheduling"
   ],
-  "memoryLimit": 4294967296,
+  "memoryLimit": 1073741824,
   "httpPort": 5000,
   "checklist": {
     "register-admin": {
