@@ -240,3 +240,10 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.62.0)
 * Better error messages by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/861
 
+[1.15.1]
+* Update postiz-app to 1.62.3
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.62.3)
+* Vulnerabilities fixed
+* Remove unused dependencies
+* Fix undefined mapping
+
