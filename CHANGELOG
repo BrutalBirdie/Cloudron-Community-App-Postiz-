@@ -247,3 +247,12 @@
 * Remove unused dependencies
 * Fix undefined mapping
 
+[1.16.0]
+* Update postiz-app to 1.64.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.64.1)
+* Changed the NotAcceptable to Conflict on scope.
+* You can now automate your video generation with Postiz's public API (available for both self-hosters and cloud)
+* Added Dev.to, Medium and Hashnode - currently no MD editor, will be added soon.
+* Faster builds, we don't need to emulate ARM64, GitHub has a ARM64 builder on Ubuntu
+* We had an unused enterprise plugin preparation, but since it's illegal with AGPL3, it was removed.
+
