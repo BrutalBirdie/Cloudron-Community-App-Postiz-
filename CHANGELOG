@@ -256,3 +256,10 @@
 * Faster builds, we don't need to emulate ARM64, GitHub has a ARM64 builder on Ubuntu
 * We had an unused enterprise plugin preparation, but since it's illegal with AGPL3, it was removed.
 
+[1.17.0]
+* Update postiz-app to 1.65.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.1)
+* The wrong URL has been accidently set for WordPress
+* Add a new provider - you can now schedule posts to WordPress.
+* Moving the editor to TipTap - HTML, to support any platform.
+
