@@ -263,3 +263,13 @@
 * Add a new provider - you can now schedule posts to WordPress.
 * Moving the editor to TipTap - HTML, to support any platform.
 
+[1.17.1]
+* Update postiz-app to 1.65.7
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.7)
+* [`v1.65.7`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.7): HeyGen support for talking photos
+* [`v1.65.6`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.6): HeyGen fix for talking avatars pictures
+* [`v1.65.5`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.5): Added Alt to BlueSky
+* [`v1.65.4`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.4): Weird editor behaviour width + fix chars again
+* [`v1.65.3`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.3): Fix for character counter
+* [`v1.65.2`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.2): Monitoring + Fixed extra chars
+
