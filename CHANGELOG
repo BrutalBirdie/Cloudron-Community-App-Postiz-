@@ -273,3 +273,6 @@
 * [`v1.65.3`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.3): Fix for character counter
 * [`v1.65.2`](https://github.com/gitroomhq/postiz-app/releases/tag/v1.65.2): Monitoring + Fixed extra chars
 
+[1.17.2]
+* Set NEXT_PUBLIC_UPLOAD_DIRECTORY to fix file uploads
+
