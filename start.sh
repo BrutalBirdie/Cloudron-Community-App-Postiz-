@@ -45,6 +45,7 @@ STORAGE_PROVIDER="local"
 UPLOAD_DIRECTORY="/app/data/data"
 
 NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY="/app/data/data"
+NEXT_PUBLIC_UPLOAD_DIRECTORY="/app/data/data"
 
 NX_ADD_PLUGINS=false
 IS_GENERAL="true"
@@ -57,7 +58,7 @@ EMAIL_PASS="${CLOUDRON_MAIL_SMTP_PASSWORD}"
 EMAIL_FROM_NAME="${CLOUDRON_MAIL_FROM_DISPLAY_NAME:-Postiz}"
 EMAIL_FROM_ADDRESS="${CLOUDRON_MAIL_FROM}"
 EOT
-#set -o allexport && source /run/postiz/env && set +o allexport
+set -o allexport && source /run/postiz/env && set +o allexport
 
 
 echo "==> Changing ownership"
