@@ -16,9 +16,9 @@
     "rimraf": "^6.0.1",
     "selenium-server-standalone-jar": "^4.33.0",
     "selenium-webdriver": "^4.34.0",
-    "superagent": "^10.2.2"
+    "superagent": "^10.2.3"
   },
   "dependencies": {
-    "chromedriver": "^138.0.3"
+    "chromedriver": "^138.0.4"
   }
 }
