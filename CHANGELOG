@@ -276,3 +276,12 @@
 [1.17.2]
 * Set NEXT_PUBLIC_UPLOAD_DIRECTORY to fix file uploads
 
+[1.18.0]
+* Update postiz-app to 2.0.4
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.0.4)
+* Restrict files to upload + connect integrations UI fix
+* Fixed icons yellow color for integration menu + fixed schedule for current date
+* Fixed getting posts UTC problem + moved the &quot;Today&quot; button
+* Fixed for empty with no data, missing translations
+* Postiz new design: Welcome to v2!
+
