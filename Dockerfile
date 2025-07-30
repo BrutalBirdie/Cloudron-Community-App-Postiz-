@@ -43,12 +43,19 @@ ENV PATH=$PATH:/app/code/node_modules/.bin
 WORKDIR /app/code
 COPY --from=builder --chown=cloudron:cloudron /app/code/apps /app/code/apps
 COPY --from=builder --chown=cloudron:cloudron /app/code/.env.example /app/code/
-COPY --from=builder --chown=cloudron:cloudron /app/code/var/docker/Caddyfile /app/code/
 COPY --from=builder --chown=cloudron:cloudron /app/code/libraries /app/code/libraries
 COPY --from=builder --chown=cloudron:cloudron /app/code/node_modules /app/code/node_modules
 COPY --from=builder --chown=cloudron:cloudron /app/code/package.json /app/code/
 
 RUN ln -sf /run/postiz/env /app/code/.env
+
+# configure nginx
+RUN rm /etc/nginx/sites-enabled/* && \
+    ln -sf /dev/stdout /var/log/nginx/access.log && \
+    ln -sf /dev/stderr /var/log/nginx/error.log
+
+COPY nginx/postiz.conf /etc/nginx/sites-enabled/postiz.conf
+COPY nginx/readonlyrootfs.conf /etc/nginx/conf.d/readonlyrootfs.conf
 
 COPY supervisor/* /etc/supervisor/conf.d/
 RUN ln -sf /run/postiz/supervisord.log /var/log/supervisor/supervisord.log
