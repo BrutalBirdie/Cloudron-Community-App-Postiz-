@@ -136,27 +136,6 @@ describe('Application life cycle test', function () {
         await clearCache();
     }
 
-    async function createSignatureOld(signature) {
-        await browser.get(`https://${app.fqdn}/settings`);
-
-        console.log('clicking on signature tab');
-        await waitForElement(By.id('mantine-r1-tab-signatures'));
-        await browser.findElement(By.id('mantine-r1-tab-signatures')).click();
-
-        console.log('adding signature');
-        await waitForElement(By.xpath('//button[contains(., "Add a signature")]'));
-        await browser.findElement(By.xpath('//button[contains(., "Add a signature")]')).click();
-
-        console.log('putting text in signature dialog');
-        await waitForElement(By.xpath('//div[@role="textbox"]'));
-        await browser.findElement(By.xpath('//div[@role="textbox"]')).sendKeys(signature);
-        await browser.findElement(By.xpath('//button[@type="submit" and contains(., "Save")]')).click();
-
-        console.log('waiting for signature confirmation');
-        await browser.sleep(3000);
-        // await waitForElement(By.xpath(`//div[contains(., "${signature}")]`));
-    }
-
     async function createSignature(signature) {
         await browser.get(`https://${app.fqdn}/settings`);
 
@@ -176,15 +155,6 @@ describe('Application life cycle test', function () {
         console.log('waiting for signature confirmation');
         await browser.sleep(3000);
         // await waitForElement(By.xpath(`//div[contains(., "${signature}")]`));
-    }
-
-    async function checkSignatureOld(signature) {
-        await browser.get(`https://${app.fqdn}/settings`);
-
-        await waitForElement(By.id('mantine-r1-tab-signatures'));
-        await browser.findElement(By.id('mantine-r1-tab-signatures')).click();
-
-        await waitForElement(By.xpath(`//div[contains(., "${signature}")]`));
     }
 
     async function checkSignature(signature) {
@@ -277,12 +247,12 @@ describe('Application life cycle test', function () {
 
     it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
 
-    it('can create signature', createSignatureOld.bind(null, SIGNATURE_TEXT));
-    it('can check signature', checkSignatureOld.bind(null, SIGNATURE_TEXT));
+    it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
+    it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
-    it('can check signature', checkSignatureOld.bind(null, SIGNATURE_TEXT));
+    it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
     it('can update', async function () { execSync('cloudron update --app ' + LOCATION, EXEC_ARGS); });
