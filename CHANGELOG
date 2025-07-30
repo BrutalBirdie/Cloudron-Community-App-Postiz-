@@ -285,3 +285,9 @@
 * Fixed for empty with no data, missing translations
 * Postiz new design: Welcome to v2!
 
+[1.18.1]
+* Update postiz-app to 2.0.6
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.0.6)
+* Fix disable registration  
+* Move caddy to nginx, Remove inter / chakra font from the system
+
