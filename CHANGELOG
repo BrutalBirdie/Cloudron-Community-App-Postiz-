@@ -291,3 +291,9 @@
 * Fix disable registration  
 * Move caddy to nginx, Remove inter / chakra font from the system
 
+[1.18.2]
+* Update postiz-app to 2.0.8
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.0.8)
+* [`v2.0.8`](https://github.com/gitroomhq/postiz-app/releases/tag/v2.0.8): Fix for nginx to serve uploads
+* [`v2.0.7`](https://github.com/gitroomhq/postiz-app/releases/tag/v2.0.7): WordPress no avatar URL is failing to connect
+
