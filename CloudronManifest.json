@@ -5,7 +5,7 @@
   "contactEmail": "support@cloudron.io",
   "tagline": "social media scheduling tool",
   "description": "file://DESCRIPTION.md",
-  "upstreamVersion": "2.0.8",
+  "upstreamVersion": "2.1.0",
   "version": "1.18.3",
   "healthCheckPath": "/",
   "icon": "file://logo.png",
