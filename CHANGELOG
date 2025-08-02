@@ -301,3 +301,12 @@
 * Remove Caddy
 * Fix nginx config for uploads
 
+[1.19.0]
+* Update postiz-app to 2.1.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.1.0)
+* Added mentions: now in Bluesky, X, and LinkedIn, you can start typing "@" to get mentions.
+* General fixed thanks to sentry
+* Queries improvements (added indexes)
+* Sentry by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/905
+* Better mentioning functionality by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/911
+
