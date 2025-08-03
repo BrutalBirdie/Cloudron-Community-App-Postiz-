@@ -310,3 +310,8 @@
 * Sentry by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/905
 * Better mentioning functionality by [@nevo-david](https://github.com/nevo-david) in https://github.com/gitroomhq/postiz-app/pull/911
 
+[1.19.1]
+* Update postiz-app to 2.1.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.1.1)
+* We have recently moved to the TipTap editor that gives us full HTML support.
+
