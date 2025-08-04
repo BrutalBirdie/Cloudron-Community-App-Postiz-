@@ -315,3 +315,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.1.1)
 * We have recently moved to the TipTap editor that gives us full HTML support.
 
+[1.19.2]
+* Update postiz-app to 2.1.2
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.1.2)
+* Hot fix for mentions - when social doesn&#x27;t exist in mentions, it crashes
+
