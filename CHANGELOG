@@ -329,3 +329,8 @@
 * [`v2.2.1`](https://github.com/gitroomhq/postiz-app/releases/tag/v2.2.1): Remove authentication from concurrency
 * [`v2.2.0`](https://github.com/gitroomhq/postiz-app/releases/tag/v2.2.0): Tag people on Discord
 
+[1.21.0]
+* Update postiz-app to 2.3.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.3.0)
+* You can now add hyperlinks in the tiptap editor.
+
