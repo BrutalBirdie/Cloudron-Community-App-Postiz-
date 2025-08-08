@@ -334,3 +334,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.3.0)
 * You can now add hyperlinks in the tiptap editor.
 
+[1.21.1]
+* Update postiz-app to 2.3.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.3.1)
+* Fix wordpress upload cover picture
+
