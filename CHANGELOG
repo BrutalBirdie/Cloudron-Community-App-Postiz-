@@ -339,3 +339,18 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.3.1)
 * Fix wordpress upload cover picture
 
+[1.22.0]
+* Update postiz-app to 2.5.2
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.5.2)
+* gitroomhq/postiz-app (gitroomhq/postiz-app)
+* Bluesky: fix images aspect ratio
+* Fix threads finisher editor
+* Timezone / Time + Char Limit + Bottleneck Fixes + Bluesky fix
+* You can now see the characters of all the socials on the global editing.
+* You can change the timezone/date format from the settings
+* Bluesky added replies to the main comment and not to replies when adding a thread.
+* Shortlinking regex was not good with the new html tiptap editor
+* YouTube tags are not being saved
+* Prevent HTML parsing when there is no HTML
+* Mention roles in Discord
+
