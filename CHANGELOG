@@ -354,3 +354,8 @@
 * Prevent HTML parsing when there is no HTML
 * Mention roles in Discord
 
+[1.22.1]
+* Update postiz-app to 2.5.3
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.5.3)
+* Strip H's tags when posting to normal socials like LinkedIn / X
+
