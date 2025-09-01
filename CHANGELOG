@@ -359,3 +359,10 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.5.3)
 * Strip H's tags when posting to normal socials like LinkedIn / X
 
+[1.22.2]
+* Update postiz-app to 2.5.4
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.5.4)
+* Added a disconnect on Prisma nestjs shutdown hook, to remove the connection and save resources.
+* Preview date rendered the local date on the server side, which caused it to show an irrelevant date.
+* Tiptap editor send > and < and this is how it is published on social media, added a replace.
+
