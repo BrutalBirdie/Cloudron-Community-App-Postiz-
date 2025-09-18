@@ -366,3 +366,12 @@
 * Preview date rendered the local date on the server side, which caused it to show an irrelevant date.
 * Tiptap editor send > and < and this is how it is published on social media, added a replace.
 
+[1.23.0]
+* Update postiz-app to 2.6.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.6.0)
+* We have just released a new provider: Listmonk.  
+* You can now schedule emails! With Listmonk.  
+* Fully translated into Georgian -    by [@ZurabBalamtsarashvili](https://github.com/ZurabBalamtsarashvili) in [#971](https://github.com/gitroomhq/postiz-app/pull/971)  
+* logo jsx attribute fix: stroke-width -> strokeWidth by [@Dforrunner](https://github.com/Dforrunner) in [#970](https://github.com/gitroomhq/postiz-app/pull/970)  
+* Fix Georgian translation for cancellation message by [@ZurabBalamtsarashvili](https://github.com/ZurabBalamtsarashvili) in [#980](https://github.com/gitroomhq/postiz-app/pull/980)
+
