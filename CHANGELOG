@@ -375,3 +375,11 @@
 * logo jsx attribute fix: stroke-width -> strokeWidth by [@Dforrunner](https://github.com/Dforrunner) in [#970](https://github.com/gitroomhq/postiz-app/pull/970)  
 * Fix Georgian translation for cancellation message by [@ZurabBalamtsarashvili](https://github.com/ZurabBalamtsarashvili) in [#980](https://github.com/gitroomhq/postiz-app/pull/980)
 
+[1.23.1]
+* Update postiz-app to 2.6.3
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.6.3)
+* [`v2.6.3`](https://github.com/gitroomhq/postiz-app/releases/tag/v2.6.3): #&#8203;2 Fix &amp;lt; and &amp;gt; in markdown
+* [`v2.6.2`](https://github.com/gitroomhq/postiz-app/releases/tag/v2.6.2): Fix &amp;lt; and &amp;gt; in markdown
+* [`v2.6.1`](https://github.com/gitroomhq/postiz-app/releases/tag/v2.6.1): Fix for Listmonk
+* Wrong Post ID on return
+

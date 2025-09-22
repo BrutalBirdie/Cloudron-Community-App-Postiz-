@@ -6,7 +6,7 @@
   "tagline": "social media scheduling tool",
   "description": "file://DESCRIPTION.md",
   "upstreamVersion": "2.6.3",
-  "version": "1.23.0",
+  "version": "1.23.1",
   "healthCheckPath": "/",
   "icon": "file://logo.png",
   "tags": [
