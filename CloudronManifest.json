@@ -25,12 +25,16 @@
     "/app/code/node_modules",
     "/app/code/apps/frontend/.next/cache"
   ],
+  "optionalSso": true,
   "manifestVersion": 2,
   "minBoxVersion": "8.0.0",
   "addons": {
     "localstorage": {},
     "postgresql": {},
     "redis": {},
+    "oidc": {
+      "loginRedirectUri": "/integrations/social/cloudron"
+    },
     "sendmail": {
       "supportsDisplayName": true
     }

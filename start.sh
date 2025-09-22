@@ -28,7 +28,6 @@ fi
 
 cat /app/data/env > /run/postiz/env
 cat >> /run/postiz/env <<EOT
-
 POSTIZ_APPS="frontend workers cron backend"
 
 DATABASE_URL="${CLOUDRON_POSTGRESQL_URL}"
@@ -58,6 +57,23 @@ EMAIL_PASS="${CLOUDRON_MAIL_SMTP_PASSWORD}"
 EMAIL_FROM_NAME="${CLOUDRON_MAIL_FROM_DISPLAY_NAME:-Postiz}"
 EMAIL_FROM_ADDRESS="${CLOUDRON_MAIL_FROM}"
 EOT
+
+if [[ -n "${CLOUDRON_OIDC_ISSUER:-}" ]]; then
+    echo "==> Ensure OIDC settings"
+
+    cat >> /run/postiz/env <<EOT
+POSTIZ_OAUTH_URL="${CLOUDRON_OIDC_ISSUER}"
+NEXT_PUBLIC_POSTIZ_OAUTH_DISPLAY_NAME="Cloudron"
+POSTIZ_OAUTH_AUTH_URL="${CLOUDRON_OIDC_AUTH_ENDPOINT}"
+POSTIZ_OAUTH_TOKEN_URL="${CLOUDRON_OIDC_TOKEN_ENDPOINT}"
+POSTIZ_OAUTH_USERINFO_URL="${CLOUDRON_OIDC_PROFILE_ENDPOINT}"
+POSTIZ_OAUTH_CLIENT_ID="${CLOUDRON_OIDC_CLIENT_ID}"
+POSTIZ_OAUTH_CLIENT_SECRET="${CLOUDRON_OIDC_CLIENT_SECRET}"
+POSTIZ_OAUTH_SCOPE="openid profile email" # default values
+EOT
+
+fi
+
 set -o allexport && source /run/postiz/env && set +o allexport
 
 echo "==> Changing ownership"
