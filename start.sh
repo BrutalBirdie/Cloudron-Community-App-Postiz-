@@ -62,6 +62,7 @@ if [[ -n "${CLOUDRON_OIDC_ISSUER:-}" ]]; then
     echo "==> Ensure OIDC settings"
 
     cat >> /run/postiz/env <<EOT
+POSTIZ_GENERIC_OAUTH="true"
 POSTIZ_OAUTH_URL="${CLOUDRON_OIDC_ISSUER}"
 NEXT_PUBLIC_POSTIZ_OAUTH_DISPLAY_NAME="Cloudron"
 POSTIZ_OAUTH_AUTH_URL="${CLOUDRON_OIDC_AUTH_ENDPOINT}"

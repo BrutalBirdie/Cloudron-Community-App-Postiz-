@@ -33,7 +33,7 @@
     "postgresql": {},
     "redis": {},
     "oidc": {
-      "loginRedirectUri": "/integrations/social/cloudron"
+      "loginRedirectUri": "/settings"
     },
     "sendmail": {
       "supportsDisplayName": true
