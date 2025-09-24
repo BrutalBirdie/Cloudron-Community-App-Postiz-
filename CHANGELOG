@@ -383,3 +383,8 @@
 * [`v2.6.1`](https://github.com/gitroomhq/postiz-app/releases/tag/v2.6.1): Fix for Listmonk
 * Wrong Post ID on return
 
+[1.23.2]
+* Update postiz-app to 2.6.4
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.6.4)
+* Fix markdown 
+
