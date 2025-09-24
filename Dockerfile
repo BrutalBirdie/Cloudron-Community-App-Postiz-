@@ -25,8 +25,8 @@ ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN pnpm config set cache /run/npm-cache && \
     pnpm config set userconfig /run/npm-config/npmrc
 
-RUN pnpm install
-RUN pnpm run build
+RUN pnpm install && \
+    pnpm run build
 
 FROM base AS runner
 

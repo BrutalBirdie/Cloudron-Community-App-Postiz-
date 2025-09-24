@@ -60,7 +60,6 @@ EMAIL_FROM_ADDRESS="${CLOUDRON_MAIL_FROM}"
 EOT
 set -o allexport && source /run/postiz/env && set +o allexport
 
-
 echo "==> Changing ownership"
 chown -R cloudron:cloudron /app/data /run/postiz
 
