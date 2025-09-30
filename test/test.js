@@ -15,6 +15,11 @@ const execSync = require('child_process').execSync,
     { Builder, By, Key, until } = require('selenium-webdriver'),
     { Options } = require('selenium-webdriver/chrome');
 
+if (!process.env.USERNAME || !process.env.PASSWORD) {
+    console.log('USERNAME, PASSWORD env vars need to be set');
+    process.exit(1);
+}
+
 describe('Application life cycle test', function () {
     this.timeout(0);
 
@@ -22,13 +27,16 @@ describe('Application life cycle test', function () {
     const TIMEOUT = parseInt(process.env.TIMEOUT, 10) || 40000;
     const EXEC_ARGS = { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' };
 
-    let browser, app;
+    let browser, app, cloudronName;
 
     const ADMIN_EMAIL = 'admin@cloudron.local';
     const ADMIN_PASSWORD = 'changeme123';
 
     const COMPANY_NAME = 'Cloudron';
     const SIGNATURE_TEXT = 'AM30'; // keep this short! text gets elided and tests fail
+
+    const username = process.env.USERNAME;
+    const password = process.env.PASSWORD;
 
     before(async function () {
         await startBrowser();
@@ -54,6 +62,8 @@ describe('Application life cycle test', function () {
         const inspect = JSON.parse(execSync('cloudron inspect'));
         app = inspect.apps.filter(function (a) { return a.location.startsWith(LOCATION); })[0];
         expect(app).to.be.an('object');
+        const tmp = execSync(`cloudron exec --app ${app.id} env`).toString().split('\n').find((l) => l.indexOf('CLOUDRON_OIDC_PROVIDER_NAME=') === 0);
+        if (tmp) cloudronName = tmp.slice('CLOUDRON_OIDC_PROVIDER_NAME='.length);
     }
 
     async function clearCache() {
@@ -132,6 +142,34 @@ describe('Application life cycle test', function () {
         await waitForElement(By.xpath('//a[contains(@href, "launches")]')); // the Calendar
     }
 
+    async function loginOIDC(username, password, alreadyAuthenticated = false, createAccount = false) {
+        await browser.manage().deleteAllCookies();
+
+        await browser.get(`https://${app.fqdn}/auth/login`);
+
+        await browser.wait(until.elementLocated(By.xpath(`//div[contains(@class, "cursor-pointer") and contains(., "Sign in with") and contains(., "${cloudronName}")]`)), TIMEOUT);
+        await browser.findElement(By.xpath(`//div[contains(@class, "cursor-pointer") and contains(., "Sign in with") and contains(., "${cloudronName}")]`)).click();
+
+        await browser.sleep(2000);
+
+        if (!alreadyAuthenticated) {
+            await waitForElement(By.id('inputUsername'));
+            await browser.findElement(By.id('inputUsername')).sendKeys(username);
+            await browser.findElement(By.id('inputPassword')).sendKeys(password);
+            await browser.findElement(By.id('loginSubmitButton')).click();
+        }
+
+        if (createAccount) {
+            await waitForElement(By.xpath('//input[@name="company"]'));
+            await browser.findElement(By.xpath('//input[@name="company"]')).sendKeys(COMPANY_NAME);
+            await browser.sleep(2000);
+            await browser.findElement(By.xpath('//button[@type="submit"]')).click();
+        }
+
+        await browser.sleep(2000);
+        await waitForElement(By.xpath('//a[contains(@href, "launches")]'));
+    }
+
     async function logout() {
         await clearCache();
     }
@@ -192,6 +230,9 @@ describe('Application life cycle test', function () {
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
+    it('can login OIDC', loginOIDC.bind(null, username, password, false, true));
+    it('can logout', logout);
+
     it('can restart app', async function () {
         execSync(`cloudron restart --app ${app.id}`);
     });
@@ -201,6 +242,9 @@ describe('Application life cycle test', function () {
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
+    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
+    it('can logout', logout);
+
     it('backup app', function () {
         execSync('cloudron backup create --app ' + app.id, EXEC_ARGS);
     });
@@ -208,7 +252,7 @@ describe('Application life cycle test', function () {
     it('restore app', async function () {
         const backups = JSON.parse(execSync('cloudron backup list --raw'));
         execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
-        execSync('cloudron install --no-sso --location ' + LOCATION, EXEC_ARGS);
+        execSync('cloudron install --location ' + LOCATION, EXEC_ARGS);
         getAppInfo();
         execSync(`cloudron restore --backup ${backups[0].id} --app ${app.id}`, EXEC_ARGS);
     });
@@ -216,6 +260,9 @@ describe('Application life cycle test', function () {
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
+    it('can logout', logout);
+
+    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
     it('can logout', logout);
 
     it('move to different location', async function () {
@@ -230,12 +277,15 @@ describe('Application life cycle test', function () {
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
+    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
+    it('can logout', logout);
+
     it('uninstall app', function () {
         execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
     });
 
     // test update
-    it('can install app for update', async function () { execSync('cloudron install --no-sso --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS); });
+    it('can install app for update', async function () { execSync('cloudron install --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS); });
     it('can get app information', getAppInfo);
 
     it('disable email notifications (activation emails)', async function () {
@@ -255,6 +305,10 @@ describe('Application life cycle test', function () {
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
+// uncomment on the next release
+//    it('can login OIDC', loginOIDC.bind(null, username, password, false, true));
+//    it('can logout', logout);
+
     it('can update', async function () { execSync('cloudron update --app ' + LOCATION, EXEC_ARGS); });
 
     it('wait for all services', async function () { await waitForApp(); });
@@ -263,6 +317,10 @@ describe('Application life cycle test', function () {
 
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
+
+// uncomment on the next release
+//    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
+//    it('can logout', logout);
 
     it('uninstall app', function () {
         execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
