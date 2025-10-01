@@ -388,3 +388,6 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.6.4)
 * Fix markdown 
 
+[1.24.0]
+* Implement OIDC auth
+
