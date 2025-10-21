@@ -391,3 +391,9 @@
 [1.24.0]
 * Implement OIDC auth
 
+[1.25.0]
+* Update postiz-app to 2.8.0
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.8.0)
+* Introducing the new Postiz agent and MCP. You can schedule posts or multiple posts to multiple social channel from the chat. This require ChatGPT.
+* Upgraded to node 22: Support for ESM imports from commonjs
+
