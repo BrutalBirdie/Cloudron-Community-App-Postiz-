@@ -397,3 +397,6 @@
 * Introducing the new Postiz agent and MCP. You can schedule posts or multiple posts to multiple social channel from the chat. This require ChatGPT.
 * Upgraded to node 22: Support for ESM imports from commonjs
 
+[1.25.1]
+* Remove usage of runtime dirs for pnpm and prisma
+
