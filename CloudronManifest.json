@@ -21,10 +21,6 @@
       "message": "On first visit, you can set up an admin user and then create other users."
     }
   },
-  "runtimeDirs": [
-    "/app/code/node_modules",
-    "/app/code/apps/frontend/.next/cache"
-  ],
   "optionalSso": true,
   "manifestVersion": 2,
   "minBoxVersion": "8.0.0",
