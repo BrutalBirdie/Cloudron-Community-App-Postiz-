@@ -400,3 +400,8 @@
 [1.25.1]
 * Remove usage of runtime dirs for pnpm and prisma
 
+[1.25.2]
+* Update postiz-app to 2.8.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.8.1)
+* fix: stop inserting slash into OAuth url by [@fllppi](https://github.com/fllppi) in [#1065](https://github.com/gitroomhq/postiz-app/pull/1065)
+
