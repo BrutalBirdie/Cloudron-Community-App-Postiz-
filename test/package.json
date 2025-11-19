@@ -13,12 +13,12 @@
     "expect.js": "^0.3.1",
     "mkdirp": "^3.0.1",
     "mocha": "^11.7.5",
-    "rimraf": "^6.1.0",
+    "rimraf": "^6.1.2",
     "selenium-server-standalone-jar": "^4.38.0",
     "selenium-webdriver": "^4.38.0",
     "superagent": "^10.2.3"
   },
   "dependencies": {
-    "chromedriver": "^142.0.2"
+    "chromedriver": "^142.0.3"
   }
 }
