@@ -405,3 +405,9 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.8.1)
 * fix: stop inserting slash into OAuth url by [@fllppi](https://github.com/fllppi) in [#1065](https://github.com/gitroomhq/postiz-app/pull/1065)
 
+[1.25.3]
+* Update postiz-app to 2.8.2
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.8.2)
+* fix: Twitter/X thread finisher posting with HTML tags by [@meysam81](https://github.com/meysam81) in [#1057](https://github.com/gitroomhq/postiz-app/pull/1057)
+* Basic Sentry Metric Functionality by [@egelhaus](https://github.com/egelhaus) in [#1064](https://github.com/gitroomhq/postiz-app/pull/1064)
+
