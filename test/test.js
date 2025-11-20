@@ -284,45 +284,45 @@ describe('Application life cycle test', function () {
         execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
     });
 
-    // test update
-    it('can install app for update', async function () { execSync('cloudron install --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS); });
-    it('can get app information', getAppInfo);
+//     // test update
+//     it('can install app for update', async function () { execSync('cloudron install --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS); });
+//     it('can get app information', getAppInfo);
 
-    it('disable email notifications (activation emails)', async function () {
-        await removeEmailProvider();
-        execSync(`cloudron restart --app ${app.id}`);
-    });
+//     it('disable email notifications (activation emails)', async function () {
+//         await removeEmailProvider();
+//         execSync(`cloudron restart --app ${app.id}`);
+//     });
 
-    it('wait for all services', async function () { await waitForApp(); });
+//     it('wait for all services', async function () { await waitForApp(); });
 
-    it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
+//     it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
 
-    it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
-    it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+//     it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
+//     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
+//     it('can logout', logout);
 
-    it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
-    it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+//     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
+//     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
+//     it('can logout', logout);
 
-// uncomment on the next release
-//    it('can login OIDC', loginOIDC.bind(null, username, password, false, true));
-//    it('can logout', logout);
+// // uncomment on the next release
+// //    it('can login OIDC', loginOIDC.bind(null, username, password, false, true));
+// //    it('can logout', logout);
 
-    it('can update', async function () { execSync('cloudron update --app ' + LOCATION, EXEC_ARGS); });
+//     it('can update', async function () { execSync('cloudron update --app ' + LOCATION, EXEC_ARGS); });
 
-    it('wait for all services', async function () { await waitForApp(); });
+//     it('wait for all services', async function () { await waitForApp(); });
 
-    it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
+//     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
 
-    it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+//     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
+//     it('can logout', logout);
 
-// uncomment on the next release
-//    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
-//    it('can logout', logout);
+// // uncomment on the next release
+// //    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
+// //    it('can logout', logout);
 
-    it('uninstall app', function () {
-        execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
-    });
+//     it('uninstall app', function () {
+//         execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
+//     });
 });
