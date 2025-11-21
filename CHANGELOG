@@ -411,3 +411,7 @@
 * fix: Twitter/X thread finisher posting with HTML tags by [@meysam81](https://github.com/meysam81) in [#1057](https://github.com/gitroomhq/postiz-app/pull/1057)
 * Basic Sentry Metric Functionality by [@egelhaus](https://github.com/egelhaus) in [#1064](https://github.com/gitroomhq/postiz-app/pull/1064)
 
+[1.25.4]
+* Update postiz to 2.8.3
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.8.3)
+
