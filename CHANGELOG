@@ -420,3 +420,11 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.9.0)
 * After the long wait, Postiz now has a Google My Business!
 
+[1.27.0]
+* Update postiz-app to 2.10.1
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.10.1)
+* You can now disable the success / failure notifications.
+* Change the layout of scheduling to have two scrolls: for the channels list, and for the calendar.
+* Since we moved to the new layout, we added an inner scrollbar for the channels list, which causes the menu with the "..." to break.
+* Fixed it.
+
