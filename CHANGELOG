@@ -428,3 +428,8 @@
 * Since we moved to the new layout, we added an inner scrollbar for the channels list, which causes the menu with the "..." to break.
 * Fixed it.
 
+[1.28.0]
+* Update postiz-app to 2.11.2
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.11.2)
+* feat: add WebP image upload support by [@Fer-r](https://github.com/Fer-r) in [#1138](https://github.com/gitroomhq/postiz-app/pull/1138)
+
