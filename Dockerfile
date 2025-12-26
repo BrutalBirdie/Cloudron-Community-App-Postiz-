@@ -18,7 +18,7 @@ FROM base AS builder
 WORKDIR /app/code
 
 # renovate: datasource=github-releases depName=gitroomhq/postiz-app versioning=semver extractVersion=^v(?<version>.+)$
-ARG POSTIZ_VERSION=2.10.1
+ARG POSTIZ_VERSION=2.11.2
 RUN curl -L "https://github.com/gitroomhq/postiz-app/archive/refs/tags/v${POSTIZ_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /app/code
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
