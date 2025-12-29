@@ -433,3 +433,8 @@
 * [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.11.2)
 * feat: add WebP image upload support by [@Fer-r](https://github.com/Fer-r) in [#1138](https://github.com/gitroomhq/postiz-app/pull/1138)
 
+[1.28.1]
+* Update postiz-app to 2.11.3
+* [Full Changelog](https://github.com/gitroomhq/postiz-app/releases/tag/v2.11.3)
+* Modal without settings in draft, failed to open.
+
