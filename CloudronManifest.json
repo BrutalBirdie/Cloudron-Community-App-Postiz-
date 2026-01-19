@@ -18,7 +18,7 @@
   "httpPort": 5000,
   "checklist": {
     "register-admin": {
-      "message": "On first visit, you can set up an admin user and then create other users."
+      "message": "On first visit, you can set up an admin user and then create other users"
     }
   },
   "optionalSso": true,
