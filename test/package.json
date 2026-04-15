@@ -10,9 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "ejs": "^3.1.10",
-    "mkdirp": "^3.0.1",
     "mocha": "^11.7.5",
-    "rimraf": "^6.1.2",
     "selenium-server-standalone-jar": "^4.38.0",
     "selenium-webdriver": "^4.39.0",
     "@cloudron/superagent": "^10.2.3"
