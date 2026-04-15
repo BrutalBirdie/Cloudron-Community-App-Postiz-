@@ -15,7 +15,7 @@
     "rimraf": "^6.1.2",
     "selenium-server-standalone-jar": "^4.38.0",
     "selenium-webdriver": "^4.39.0",
-    "superagent": "^10.2.3"
+    "@cloudron/superagent": "^10.2.3"
   },
   "dependencies": {
     "chromedriver": "^143.0.3"
