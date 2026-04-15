@@ -15,8 +15,6 @@
     "selenium-webdriver": "^4.39.0",
     "@cloudron/superagent": "^10.2.3"
   },
-  "dependencies": {
-    "chromedriver": "^143.0.3"
-  },
+  "dependencies": {},
   "type": "module"
 }
