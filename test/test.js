@@ -7,7 +7,7 @@
 require('chromedriver');
 
 const execSync = require('child_process').execSync,
-    expect = require('expect.js'),
+    assert = require('node:assert/strict'),
     fs = require('fs'),
     path = require('path'),
     url = require('url'),
@@ -52,7 +52,7 @@ describe('Application life cycle test', function () {
 
         const currentUrl = await browser.getCurrentUrl();
         if (!currentUrl.includes(app.domain)) return;
-        expect(this.currentTest.title).to.be.a('string');
+        assert.strictEqual(typeof this.currentTest.title, 'string');
 
         const screenshotData = await browser.takeScreenshot();
         fs.writeFileSync(`./screenshots/${new Date().getTime()}-${this.currentTest.title.replaceAll(' ', '_')}.png`, screenshotData, 'base64');
@@ -61,7 +61,7 @@ describe('Application life cycle test', function () {
     function getAppInfo() {
         const inspect = JSON.parse(execSync('cloudron inspect'));
         app = inspect.apps.filter(function (a) { return a.location.startsWith(LOCATION); })[0];
-        expect(app).to.be.an('object');
+        assert.ok(app && typeof app === 'object');
         const tmp = execSync(`cloudron exec --app ${app.id} env`).toString().split('\n').find((l) => l.indexOf('CLOUDRON_OIDC_PROVIDER_NAME=') === 0);
         if (tmp) cloudronName = tmp.slice('CLOUDRON_OIDC_PROVIDER_NAME='.length);
     }
