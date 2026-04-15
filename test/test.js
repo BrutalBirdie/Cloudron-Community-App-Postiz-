@@ -1,19 +1,16 @@
 #!/usr/bin/env node
 
+import 'chromedriver';
+import { execSync } from 'node:child_process';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import url from 'node:url';
+import util from 'node:util';
+import { Builder, By, Key, until } from 'selenium-webdriver';
+import { Options } from 'selenium-webdriver/chrome';
+
 /* global it, xit, describe, before, after, afterEach */
-
-'use strict';
-
-require('chromedriver');
-
-const execSync = require('child_process').execSync,
-    assert = require('node:assert/strict'),
-    fs = require('fs'),
-    path = require('path'),
-    url = require('url'),
-    util = require('util'),
-    { Builder, By, Key, until } = require('selenium-webdriver'),
-    { Options } = require('selenium-webdriver/chrome');
 
 if (!process.env.USERNAME || !process.env.PASSWORD) {
     console.log('USERNAME, PASSWORD env vars need to be set');
@@ -25,7 +22,7 @@ describe('Application life cycle test', function () {
 
     const LOCATION = process.env.LOCATION || 'test';
     const TIMEOUT = parseInt(process.env.TIMEOUT, 10) || 40000;
-    const EXEC_ARGS = { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' };
+    const EXEC_ARGS = { cwd: path.resolve(import.meta.dirname, '..'), stdio: 'inherit' };
 
     let browser, app, cloudronName;
 
