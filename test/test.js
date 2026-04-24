@@ -1,169 +1,62 @@
 #!/usr/bin/env node
 
-import { execSync } from 'node:child_process';
-import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import path from 'node:path';
-import url from 'node:url';
-import util from 'node:util';
-import { Builder, By, Key, until } from 'selenium-webdriver';
-import { Options } from 'selenium-webdriver/chrome';
+import { setTimeout as sleep } from 'node:timers/promises';
 
-/* global it, xit, describe, before, after, afterEach */
+import { app, clearCache, click, cloudronCli, goto, loginOIDC, sendKeys, setupBrowser, takeScreenshot, teardownBrowser, waitFor } from '@cloudron/charlie';
 
-if (!process.env.USERNAME || !process.env.PASSWORD) {
-    console.log('USERNAME, PASSWORD env vars need to be set');
-    process.exit(1);
-}
+/* global it, describe, before, after, afterEach */
 
 describe('Application life cycle test', function () {
-    this.timeout(0);
-
-    const LOCATION = process.env.LOCATION || 'test';
-    const TIMEOUT = parseInt(process.env.TIMEOUT, 10) || 40000;
-    const EXEC_ARGS = { cwd: path.resolve(import.meta.dirname, '..'), stdio: 'inherit' };
-
-    let browser, app, cloudronName;
-
     const ADMIN_EMAIL = 'admin@cloudron.local';
     const ADMIN_PASSWORD = 'changeme123';
 
     const COMPANY_NAME = 'Cloudron';
     const SIGNATURE_TEXT = 'AM30'; // keep this short! text gets elided and tests fail
 
-    const username = process.env.USERNAME;
-    const password = process.env.PASSWORD;
-
-    before(async function () {
-        await startBrowser();
-        if (!fs.existsSync('./screenshots')) fs.mkdirSync('./screenshots');
-    });
-
-    after(function () {
-        browser.quit();
-    });
+    before(setupBrowser);
+    after(teardownBrowser);
 
     afterEach(async function () {
-        if (!process.env.CI || !app) return;
-
-        const currentUrl = await browser.getCurrentUrl();
-        if (!currentUrl.includes(app.domain)) return;
-        assert.strictEqual(typeof this.currentTest.title, 'string');
-
-        const screenshotData = await browser.takeScreenshot();
-        fs.writeFileSync(`./screenshots/${new Date().getTime()}-${this.currentTest.title.replaceAll(' ', '_')}.png`, screenshotData, 'base64');
+        await takeScreenshot(this.currentTest.title);
     });
 
-    function getAppInfo() {
-        const inspect = JSON.parse(execSync('cloudron inspect'));
-        app = inspect.apps.filter(function (a) { return a.location.startsWith(LOCATION); })[0];
-        assert.ok(app && typeof app === 'object');
-        const tmp = execSync(`cloudron exec --app ${app.id} env`).toString().split('\n').find((l) => l.indexOf('CLOUDRON_OIDC_PROVIDER_NAME=') === 0);
-        if (tmp) cloudronName = tmp.slice('CLOUDRON_OIDC_PROVIDER_NAME='.length);
-    }
-
-    async function clearCache() {
-        await browser.manage().deleteAllCookies();
-        await browser.quit();
-        browser = null;
-        const chromeOptions = new Options().windowSize({ width: 1280, height: 1024 });
-        if (process.env.CI) chromeOptions.addArguments('no-sandbox', 'disable-dev-shm-usage', 'headless');
-        chromeOptions.addArguments(`--user-data-dir=${await fs.promises.mkdtemp('/tmp/test-')}`); // --profile-directory=Default
-        browser = new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
-    }
-
-    async function startBrowser() {
-        browser = null;
-        const chromeOptions = new Options().windowSize({ width: 1280, height: 1024 });
-        if (process.env.CI) chromeOptions.addArguments('no-sandbox', 'disable-dev-shm-usage', 'headless');
-        chromeOptions.addArguments(`--user-data-dir=${await fs.promises.mkdtemp('/tmp/test-')}`); // --profile-directory=Default
-        browser = new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
-    }
-
-    async function waitForElement(elem) {
-        await browser.wait(until.elementLocated(elem), TIMEOUT);
-        await browser.wait(until.elementIsVisible(browser.findElement(elem)), TIMEOUT);
-    }
-
-    async function waitForApp(elem = '') {
-        elem = elem || By.xpath('//*[@name="email"] | //a[contains(@href, "launches")]');
-        let elementIsVisible = false;
-
-        await browser.get(`https://${app.fqdn}/auth/login`);
-
-        do {
-            try {
-                await waitForElement(elem);
-                elementIsVisible = await browser.findElement(elem).isDisplayed();
-                console.log('Frontend started? => ' + elementIsVisible);
-            }
-            catch(err) {
-                // refresh the web page
-                console.log('Refreshing the page');
-                await browser.navigate().refresh();
-                await browser.sleep(5000);
-            }
-        } while (!elementIsVisible);
-
+    async function waitForApp() {
+        await goto(`https://${app.fqdn}/auth/login`, 'xpath=//*[@name="email"] | //a[contains(@href, "launches")]');
         // todo: check API is ready
         console.log('Waiting for 40 seconds to start app services (backend, worker, cron)');
-        await browser.sleep(40000);
+        await sleep(40000);
     }
 
-    async function register(email, password) {
-        await browser.get(`https://${app.fqdn}/auth`);
-
-        await waitForElement(By.xpath('//input[@name="email"]'));
-        await browser.findElement(By.xpath('//input[@name="email"]')).sendKeys(email);
-        await browser.sleep(1000);
-        await browser.findElement(By.xpath('//input[@name="password"]')).sendKeys(password);
-        await browser.sleep(1000);
-        await browser.findElement(By.xpath('//input[@name="company"]')).sendKeys(COMPANY_NAME);
-        await browser.sleep(2000);
-        await browser.findElement(By.xpath('//button[@type="submit"]')).click();
-        await browser.sleep(2000);
-        await waitForElement(By.xpath('//a[contains(@href, "launches")]'));
+    async function register(emailAddr, pass) {
+        await goto(`https://${app.fqdn}/auth`, 'xpath=//input[@name="email"]');
+        await sendKeys('xpath=//input[@name="email"]', emailAddr);
+        await sendKeys('xpath=//input[@name="password"]', pass);
+        await sendKeys('xpath=//input[@name="company"]', COMPANY_NAME);
+        await click('xpath=//button[@type="submit"]');
+        await waitFor('xpath=//a[contains(@href, "launches")]');
     }
 
-    async function login(email, password) {
-        await browser.get(`https://${app.fqdn}/auth/login`);
-
-        await waitForElement(By.xpath('//input[@name="email"]'));
-        await browser.findElement(By.xpath('//input[@name="email"]')).sendKeys(email);
-        await browser.sleep(1000);
-        await browser.findElement(By.xpath('//input[@name="password"]')).sendKeys(password);
-        await browser.sleep(2000);
-        await browser.findElement(By.xpath('//button[@type="submit"]')).click();
-        await browser.sleep(2000);
-        await waitForElement(By.xpath('//a[contains(@href, "launches")]')); // the Calendar
+    async function login(emailAddr, pass) {
+        await goto(`https://${app.fqdn}/auth/login`, 'xpath=//input[@name="email"]');
+        await sendKeys('xpath=//input[@name="email"]', emailAddr);
+        await sendKeys('xpath=//input[@name="password"]', pass);
+        await click('xpath=//button[@type="submit"]');
+        await waitFor('xpath=//a[contains(@href, "launches")]'); // the Calendar
     }
 
-    async function loginOIDC(username, password, alreadyAuthenticated = false, createAccount = false) {
-        await browser.manage().deleteAllCookies();
+    async function loginViaOIDC() {
+        await clearCache();
+        await goto(`https://${app.fqdn}/auth/login`, 'xpath=//div[contains(@class, "cursor-pointer") and contains(., "Sign in with")]');
+        await click('xpath=//div[contains(@class, "cursor-pointer") and contains(., "Sign in with")]');
+        await loginOIDC('xpath=//a[contains(@href, "launches")] | //input[@name="company"]');
 
-        await browser.get(`https://${app.fqdn}/auth/login`);
-
-        await browser.wait(until.elementLocated(By.xpath(`//div[contains(@class, "cursor-pointer") and contains(., "Sign in with") and contains(., "${cloudronName}")]`)), TIMEOUT);
-        await browser.findElement(By.xpath(`//div[contains(@class, "cursor-pointer") and contains(., "Sign in with") and contains(., "${cloudronName}")]`)).click();
-
-        await browser.sleep(2000);
-
-        if (!alreadyAuthenticated) {
-            await waitForElement(By.id('inputUsername'));
-            await browser.findElement(By.id('inputUsername')).sendKeys(username);
-            await browser.findElement(By.id('inputPassword')).sendKeys(password);
-            await browser.findElement(By.id('loginSubmitButton')).click();
-        }
-
-        if (createAccount) {
-            await waitForElement(By.xpath('//input[@name="company"]'));
-            await browser.findElement(By.xpath('//input[@name="company"]')).sendKeys(COMPANY_NAME);
-            await browser.sleep(2000);
-            await browser.findElement(By.xpath('//button[@type="submit"]')).click();
-        }
-
-        await browser.sleep(2000);
-        await waitForElement(By.xpath('//a[contains(@href, "launches")]'));
+        // create app account if prompted
+        try {
+            await waitFor('xpath=//input[@name="company"]', { timeout: 3000 });
+            await sendKeys('xpath=//input[@name="company"]', COMPANY_NAME);
+            await click('xpath=//button[@type="submit"]');
+            await waitFor('xpath=//a[contains(@href, "launches")]');
+        } catch { /* already had account */ }
     }
 
     async function logout() {
@@ -171,53 +64,32 @@ describe('Application life cycle test', function () {
     }
 
     async function createSignature(signature) {
-        await browser.get(`https://${app.fqdn}/settings`);
+        await goto(`https://${app.fqdn}/settings`, 'xpath=//div[contains(@class, "group/profile") and contains(., "Signatures")]');
+        await click('xpath=//div[contains(@class, "group/profile") and contains(., "Signatures")]');
 
-        console.log('clicking on signature tab');
-        await waitForElement(By.xpath('//div[contains(@class, "group/profile") and contains(., "Signatures")]'));
-        await browser.findElement(By.xpath('//div[contains(@class, "group/profile") and contains(., "Signatures")]')).click();
+        await click('xpath=//button[contains(., "Add a signature")]');
 
-        console.log('adding signature');
-        await waitForElement(By.xpath('//button[contains(., "Add a signature")]'));
-        await browser.findElement(By.xpath('//button[contains(., "Add a signature")]')).click();
-
-        console.log('putting text in signature dialog');
-        await waitForElement(By.xpath('//div[@role="textbox"]'));
-        await browser.findElement(By.xpath('//div[@role="textbox"]')).sendKeys(signature);
-        await browser.findElement(By.xpath('//button[@type="submit" and contains(., "Save")]')).click();
-
-        console.log('waiting for signature confirmation');
-        await browser.sleep(3000);
-        // await waitForElement(By.xpath(`//div[contains(., "${signature}")]`));
+        await sendKeys('xpath=//div[@role="textbox"]', signature);
+        await click('xpath=//button[@type="submit" and contains(., "Save")]');
     }
 
     async function checkSignature(signature) {
-        await browser.get(`https://${app.fqdn}/settings`);
-
-        await waitForElement(By.xpath('//div[contains(@class, "group/profile") and contains(., "Signatures")]'));
-        await browser.findElement(By.xpath('//div[contains(@class, "group/profile") and contains(., "Signatures")]')).click();
-        await waitForElement(By.xpath(`//div[contains(., "${signature}")]`));
+        await goto(`https://${app.fqdn}/settings`, 'xpath=//div[contains(@class, "group/profile") and contains(., "Signatures")]');
+        await click('xpath=//div[contains(@class, "group/profile") and contains(., "Signatures")]');
+        await waitFor(`xpath=//div[contains(., "${signature}")]`);
     }
 
-    async function removeEmailProvider(env_file = '/app/data/env') {
-        execSync(`cloudron exec --app ${app.id} -- sed \'/.*EMAIL_PROVIDER="nodemailer"/d\' -i ${env_file}`);
+    async function disableEmailNotifications() {
+        await cloudronCli.exec(`sed '/.*EMAIL_PROVIDER="nodemailer"/d' -i /app/data/env`);
+        await cloudronCli.restart();
     }
 
-    xit('build app', function () {
-        execSync('cloudron build', EXEC_ARGS);
-    });
+    it('install app', cloudronCli.install);
 
-    it('install app', function () { execSync('cloudron install --location ' + LOCATION, EXEC_ARGS); });
+    it('disable email notifications (activation emails)', disableEmailNotifications);
+    it('wait for all services', waitForApp);
 
-    it('can get app information', getAppInfo);
-
-    it('disable email notifications (activation emails)', async function () {
-        await removeEmailProvider();
-        execSync(`cloudron restart --app ${app.id}`);
-    });
-    it('wait for all services', async function () { await waitForApp(); });
-
-    it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
+    it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
@@ -226,72 +98,50 @@ describe('Application life cycle test', function () {
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
-    it('can login OIDC', loginOIDC.bind(null, username, password, false, true));
+    it('can login OIDC', loginViaOIDC);
     it('can logout', logout);
 
-    it('can restart app', async function () {
-        execSync(`cloudron restart --app ${app.id}`);
-    });
-    it('wait for all services', async function () { await waitForApp(); });
+    it('can restart app', cloudronCli.restart);
+    it('wait for all services', waitForApp);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
-    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
+    it('can login OIDC', loginViaOIDC);
     it('can logout', logout);
 
-    it('backup app', function () {
-        execSync('cloudron backup create --app ' + app.id, EXEC_ARGS);
-    });
+    it('backup app', cloudronCli.createBackup);
 
-    it('restore app', async function () {
-        const backups = JSON.parse(execSync('cloudron backup list --raw'));
-        execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
-        execSync('cloudron install --location ' + LOCATION, EXEC_ARGS);
-        getAppInfo();
-        execSync(`cloudron restore --backup ${backups[0].id} --app ${app.id}`, EXEC_ARGS);
-    });
-    it('wait for all services', async function () { await waitForApp(); });
+    it('restore app', cloudronCli.restoreFromLatestBackup);
+    it('wait for all services', waitForApp);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
-    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
+    it('can login OIDC', loginViaOIDC);
     it('can logout', logout);
 
-    it('move to different location', async function () {
-        // ensure we don't hit NXDOMAIN in the mean time
-        await browser.get('about:blank');
-        execSync(`cloudron configure --app ${app.id} --location ${LOCATION}2`, EXEC_ARGS);
-        getAppInfo();
-    });
-    it('wait for all services', async function () { await waitForApp(); });
+    it('move to different location', cloudronCli.changeLocation);
+    it('wait for all services', waitForApp);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
-    it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
+    it('can login OIDC', loginViaOIDC);
     it('can logout', logout);
 
-    it('uninstall app', function () {
-        execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
-    });
+    it('uninstall app', cloudronCli.uninstall);
 
     // test update
-    it('can install app for update', async function () { execSync('cloudron install --appstore-id com.postiz.cloudronapp --location ' + LOCATION, EXEC_ARGS); });
-    it('can get app information', getAppInfo);
+    it('can install app for update', cloudronCli.appstoreInstall);
 
-    it('disable email notifications (activation emails)', async function () {
-        await removeEmailProvider();
-        execSync(`cloudron restart --app ${app.id}`);
-    });
+    it('disable email notifications (activation emails)', disableEmailNotifications);
+    it('wait for all services', waitForApp);
 
-    it('wait for all services', async function () { await waitForApp(); });
-
-    it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD, false));
+    it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
 
     it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
@@ -301,22 +151,19 @@ describe('Application life cycle test', function () {
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
-   it('can login OIDC', loginOIDC.bind(null, username, password, false, true));
-   it('can logout', logout);
+    it('can login OIDC', loginViaOIDC);
+    it('can logout', logout);
 
-    it('can update', async function () { execSync('cloudron update --app ' + LOCATION, EXEC_ARGS); });
-
-    it('wait for all services', async function () { await waitForApp(); });
+    it('can update', cloudronCli.update);
+    it('wait for all services', waitForApp);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
 
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
     it('can logout', logout);
 
-   it('can login OIDC', loginOIDC.bind(null, username, password, false, false));
-   it('can logout', logout);
+    it('can login OIDC', loginViaOIDC);
+    it('can logout', logout);
 
-    it('uninstall app', function () {
-        execSync('cloudron uninstall --app ' + app.id, EXEC_ARGS);
-    });
+    it('uninstall app', cloudronCli.uninstall);
 });
