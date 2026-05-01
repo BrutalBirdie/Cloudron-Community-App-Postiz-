@@ -45,7 +45,6 @@ describe('Application life cycle test', function () {
     }
 
     async function loginViaOIDC() {
-        await clearCache();
         await goto(`https://${app.fqdn}/auth/login`, 'xpath=//div[contains(@class, "cursor-pointer") and contains(., "Sign in with")]');
         await click('xpath=//div[contains(@class, "cursor-pointer") and contains(., "Sign in with")]');
         await loginOIDC('xpath=//a[contains(@href, "launches")] | //input[@name="company"]');
@@ -59,15 +58,11 @@ describe('Application life cycle test', function () {
         } catch { /* already had account */ }
     }
 
-    async function logout() {
-        await clearCache();
-    }
-
     async function createSignature(signature) {
         await goto(`https://${app.fqdn}/settings`, 'xpath=//div[contains(@class, "group/profile") and contains(., "Signatures")]');
         await click('xpath=//div[contains(@class, "group/profile") and contains(., "Signatures")]');
 
-        await click('xpath=//button[contains(., "Add a signature")]');
+        await click('Add a signature');
 
         await sendKeys('xpath=//div[@role="textbox"]', signature);
         await click('xpath=//button[@type="submit" and contains(., "Save")]');
@@ -92,24 +87,24 @@ describe('Application life cycle test', function () {
     it('can register admin', register.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can login OIDC', loginViaOIDC);
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can restart app', cloudronCli.restart);
     it('wait for all services', waitForApp);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can login OIDC', loginViaOIDC);
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('backup app', cloudronCli.createBackup);
 
@@ -118,20 +113,20 @@ describe('Application life cycle test', function () {
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can login OIDC', loginViaOIDC);
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('move to different location', cloudronCli.changeLocation);
     it('wait for all services', waitForApp);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can login OIDC', loginViaOIDC);
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('uninstall app', cloudronCli.uninstall);
 
@@ -145,14 +140,14 @@ describe('Application life cycle test', function () {
 
     it('can create signature', createSignature.bind(null, SIGNATURE_TEXT));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can login OIDC', loginViaOIDC);
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can update', cloudronCli.update);
     it('wait for all services', waitForApp);
@@ -160,10 +155,10 @@ describe('Application life cycle test', function () {
     it('can admin login', login.bind(null, ADMIN_EMAIL, ADMIN_PASSWORD));
 
     it('can check signature', checkSignature.bind(null, SIGNATURE_TEXT));
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('can login OIDC', loginViaOIDC);
-    it('can logout', logout);
+    it('can logout', clearCache);
 
     it('uninstall app', cloudronCli.uninstall);
 });
