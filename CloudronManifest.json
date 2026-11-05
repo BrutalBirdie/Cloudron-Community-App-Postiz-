@@ -31,14 +31,14 @@
   },
   "website": "https://postiz.com/",
   "changelog": "file://CHANGELOG.md",
-  "packageUrl": "https://github.com/BrutalBirdie/Cloudron-Postiz-App",
+  "packageUrl": "https://github.com/BrutalBirdie/Cloudron-Community-App-Postiz-",
   "packagerName": "BrutalBirdie",
-  "packagerUrl": "https://github.com/BrutalBirdie/Cloudron-Postiz-App",
+  "packagerUrl": "https://github.com/BrutalBirdie/Cloudron-Community-App-Postiz-",
   "postInstallMessage": "file://POSTINSTALL.md",
   "mediaLinks": [
-    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Postiz-App/main/screenshots/main.png",
-    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Postiz-App/main/screenshots/schedule.png",
-    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Postiz-App/main/screenshots/analytics.png"
+    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Community-App-Postiz-/community/screenshots/main.png",
+    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Community-App-Postiz-/community/screenshots/schedule.png",
+    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Community-App-Postiz-/community/screenshots/analytics.png"
   ],
   "iconUrl": "https://github.com/BrutalBirdie/Cloudron-Community-App-Postiz-/blob/community/logo.png?raw=true"
 }

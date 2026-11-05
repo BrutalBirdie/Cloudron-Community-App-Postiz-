@@ -9,7 +9,7 @@
 
 ## Install
 
-In Cloudron, open 'Add custom app' and enter `https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Postiz-App/main/CloudronVersions.json`.
+In Cloudron, open 'Add custom app' and enter `https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Community-App-Postiz-/community/CloudronVersions.json`.
 
 ## First login
 
