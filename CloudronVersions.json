@@ -44,7 +44,7 @@
                     "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Community-App-Postiz-/community/screenshots/schedule.png",
                     "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Community-App-Postiz-/community/screenshots/analytics.png"
                 ],
-                "iconUrl": "https://github.com/BrutalBirdie/Cloudron-Community-App-Postiz-/blob/community/logo.png?raw=true",
+                "iconUrl": "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Community-App-Postiz-/refs/heads/community/logo.png",
                 "dockerImage": "ghcr.io/brutalbirdie/cloudron-postiz-app:1.0.0"
             },
             "creationDate": "Thu, 05 Nov 2026 13:05:43 GMT",
