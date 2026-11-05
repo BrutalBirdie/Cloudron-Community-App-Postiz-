@@ -1,4 +1,55 @@
 {
     "stable": true,
-    "versions": {}
+    "versions": {
+        "1.0.0": {
+            "manifest": {
+                "id": "io.github.brutalbirdie.postiz",
+                "title": "Postiz",
+                "author": "Postiz Authors",
+                "tagline": "social media scheduling tool",
+                "description": "### About\n\nThe ultimate social media scheduling tool, with a bunch of AI.\n\nPostiz offers everything you need to manage your social media posts,\nbuild an audience, capture leads, and grow your business.\n\n### Features\n\n* Schedule all your social media posts (many AI features)\n* Measure your work with analytics.\n* Collaborate with other team members to exchange or buy posts.\n* Invite your team members to collaborate, comment, and schedule posts.\n\n",
+                "upstreamVersion": "2.25.3",
+                "version": "1.0.0",
+                "healthCheckPath": "/",
+                "icon": "file://logo.png",
+                "tags": [
+                    "social",
+                    "media",
+                    "scheduling"
+                ],
+                "memoryLimit": 3221225472,
+                "httpPort": 5000,
+                "optionalSso": true,
+                "manifestVersion": 2,
+                "minBoxVersion": "10.0.0",
+                "addons": {
+                    "localstorage": {},
+                    "postgresql": {},
+                    "redis": {},
+                    "oidc": {
+                        "loginRedirectUri": "/settings"
+                    },
+                    "sendmail": {
+                        "supportsDisplayName": true
+                    }
+                },
+                "website": "https://postiz.com/",
+                "changelog": "* Postiz 2.25.3 with bundled Temporal server\n",
+                "packageUrl": "https://github.com/BrutalBirdie/Cloudron-Postiz-App",
+                "packagerName": "BrutalBirdie",
+                "packagerUrl": "https://github.com/BrutalBirdie/Cloudron-Postiz-App",
+                "postInstallMessage": "Create the admin account on the login page and activate it with the email Postiz sends. After that only Cloudron users can sign up.\n\nSocial media providers need API keys in `/app/data/env`, see the [README](https://github.com/BrutalBirdie/Cloudron-Postiz-App#social-media-providers).\n",
+                "mediaLinks": [
+                    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Postiz-App/main/screenshots/main.png",
+                    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Postiz-App/main/screenshots/schedule.png",
+                    "https://raw.githubusercontent.com/BrutalBirdie/Cloudron-Postiz-App/main/screenshots/analytics.png"
+                ],
+                "iconUrl": "https://github.com/BrutalBirdie/Cloudron-Community-App-Postiz-/blob/community/logo.png?raw=true",
+                "dockerImage": "brutalbirdie/io.github.brutalbirdie.postiz:1.0.0"
+            },
+            "creationDate": "Thu, 05 Nov 2026 12:52:29 GMT",
+            "ts": "Thu, 05 Nov 2026 12:52:29 GMT",
+            "publishState": "published"
+        }
+    }
 }
