@@ -2,52 +2,53 @@
 
 set -eu
 
-mkdir -p /run/postiz/npm
-
-export NPM_CONFIG_CACHE=/run/postiz/npm
-export NPM_CONFIG_USERCONFIG=/run/postiz/npm/npmrc
-
-# migration to .env
-if [[ -f /app/data/env.sh ]]; then
-    sed -e 's/export //' /app/data/env.sh > /app/data/env
-    rm /app/data/env.sh
-fi
+mkdir -p /run/postiz/next-cache /app/data/temporal /app/data/uploads
 
 # https://github.com/gitroomhq/postiz-app/blob/main/.env.example
 if [[ ! -f /app/data/env ]]; then
     echo "==> First run. Creating env"
 
-    jwt_secret=$(pwgen -1s 64)
     cat > /app/data/env <<EOT
 # See all settings at https://github.com/gitroomhq/postiz-app/blob/main/.env.example
-DISABLE_REGISTRATION=some-nonempty-value
-JWT_SECRET="${jwt_secret}"
+JWT_SECRET="$(pwgen -1s 64)"
+# only the first account can sign up with a password, Cloudron users can always log in
+DISABLE_REGISTRATION=true
 EMAIL_PROVIDER="nodemailer"
+
+# point these at an external Temporal (e.g. Temporal Cloud) to stop using the bundled one
+#TEMPORAL_ADDRESS="127.0.0.1:7233"
+#TEMPORAL_NAMESPACE="default"
+#TEMPORAL_TLS="true"
+#TEMPORAL_API_KEY=""
 EOT
 fi
 
-cat /app/data/env > /run/postiz/env
-cat >> /run/postiz/env <<EOT
-POSTIZ_APPS="frontend workers cron backend"
+# echo guards against /app/data/env without a trailing newline
+{
+    echo 'TEMPORAL_ADDRESS="127.0.0.1:7233"'
+    cat /app/data/env
+    echo
+} > /run/postiz/env
 
+cat >> /run/postiz/env <<EOT
 DATABASE_URL="${CLOUDRON_POSTGRESQL_URL}"
-REDIS_URL="redis://default:${CLOUDRON_REDIS_PASSWORD}@${CLOUDRON_REDIS_HOST}:${CLOUDRON_REDIS_PORT}"
+REDIS_URL="${CLOUDRON_REDIS_URL}"
 
 MAIN_URL="${CLOUDRON_APP_ORIGIN}"
 FRONTEND_URL="${CLOUDRON_APP_ORIGIN}"
 NEXT_PUBLIC_BACKEND_URL="${CLOUDRON_APP_ORIGIN}/api"
-BACKEND_INTERNAL_URL="http://localhost:3000"
+BACKEND_INTERNAL_URL="http://127.0.0.1:3000"
 
-# Where will social media icons be saved - local or cloudflare.
+# re-queues posts that missed their slot - https://github.com/gitroomhq/postiz-app/blob/main/libraries/nestjs-libraries/src/temporal/infinite.workflow.register.ts
+RUN_CRON=true
+
 STORAGE_PROVIDER="local"
-
-UPLOAD_DIRECTORY="/app/data/data"
-
-NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY="/app/data/data"
-NEXT_PUBLIC_UPLOAD_DIRECTORY="/app/data/data"
+UPLOAD_DIRECTORY="/app/data/uploads"
+NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY="/app/data/uploads"
 
 NX_ADD_PLUGINS=false
 IS_GENERAL="true"
+NEXT_TELEMETRY_DISABLED=1
 
 EMAIL_HOST="${CLOUDRON_MAIL_SMTP_SERVER}"
 EMAIL_PORT=${CLOUDRON_MAIL_SMTP_PORT}
@@ -70,9 +71,8 @@ POSTIZ_OAUTH_TOKEN_URL="${CLOUDRON_OIDC_TOKEN_ENDPOINT}"
 POSTIZ_OAUTH_USERINFO_URL="${CLOUDRON_OIDC_PROFILE_ENDPOINT}"
 POSTIZ_OAUTH_CLIENT_ID="${CLOUDRON_OIDC_CLIENT_ID}"
 POSTIZ_OAUTH_CLIENT_SECRET="${CLOUDRON_OIDC_CLIENT_SECRET}"
-POSTIZ_OAUTH_SCOPE="openid profile email" # default values
+POSTIZ_OAUTH_SCOPE="openid profile email"
 EOT
-
 fi
 
 set -o allexport && source /run/postiz/env && set +o allexport
@@ -80,12 +80,9 @@ set -o allexport && source /run/postiz/env && set +o allexport
 echo "==> Changing ownership"
 chown -R cloudron:cloudron /app/data /run/postiz
 
-# Set npm config to use temporary directories
-gosu cloudron:cloudron bash -c "pnpm config set cache ${NPM_CONFIG_CACHE} && pnpm config set userconfig ${NPM_CONFIG_USERCONFIG}"
-
 echo "==> Running database migrations"
-gosu cloudron:cloudron npm run prisma-db-push
+cd /app/code
+gosu cloudron:cloudron /app/code/node_modules/.bin/prisma db push --skip-generate --schema ./libraries/nestjs-libraries/src/database/prisma/schema.prisma
 
 echo "==> Starting Postiz"
-cd /app/code
 exec /usr/bin/supervisord --configuration /etc/supervisor/supervisord.conf --nodaemon -i postiz

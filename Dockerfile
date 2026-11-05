@@ -1,58 +1,40 @@
-FROM cloudron/base:5.0.0@sha256:04fd70dbd8ad6149c19de39e35718e024417c3e01dc9c6637eaf4a41ec4e596c AS base
+# renovate: datasource=docker depName=ghcr.io/gitroomhq/postiz-app extractVersion=^v(?<version>.+)$
+ARG POSTIZ_VERSION=2.25.3
 
+FROM ghcr.io/gitroomhq/postiz-app:v${POSTIZ_VERSION} AS postiz
+
+FROM cloudron/base:6.0.1@sha256:7b1e729960c3ca312d26e886917ba89483241bba0219ff292858e10d9d5768ee
+
+RUN mkdir -p /app/pkg /app/code
 WORKDIR /app/code
 
-# wants node 22 - https://github.com/gitroomhq/postiz-app/blob/main/Dockerfile.dev#L7
-ARG NODE_VERSION=22.21.0
+# must match engines.node - https://github.com/gitroomhq/postiz-app/blob/main/package.json
+# renovate: datasource=node-version depName=node
+ARG NODE_VERSION=22.23.4
 RUN mkdir -p /usr/local/node-${NODE_VERSION} && curl -L https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz | tar zxf - --strip-components 1 -C /usr/local/node-${NODE_VERSION}
-RUN ln -sf /usr/local/node-${NODE_VERSION}/bin/node /usr/bin/node
-ENV PATH="/usr/local/node-${NODE_VERSION}/bin:$PATH"
+ENV PATH=/usr/local/node-${NODE_VERSION}/bin:$PATH
 
-ENV NEXT_TELEMETRY_DISABLED=1
+# renovate: datasource=github-releases depName=temporalio/cli versioning=semver extractVersion=^v(?<version>.+)$
+ARG TEMPORAL_CLI_VERSION=1.9.1
+RUN curl -L https://github.com/temporalio/cli/releases/download/v${TEMPORAL_CLI_VERSION}/temporal_cli_${TEMPORAL_CLI_VERSION}_linux_amd64.tar.gz | tar zxf - -C /usr/local/bin temporal
 
-# https://github.com/gitroomhq/postiz-app/blob/main/Dockerfile.dev#L3
-RUN npm --no-update-notifier --no-fund --global install pnpm@10.6.1 pm2
+COPY --from=postiz /app /app/code
 
-FROM base AS builder
+# upstream runs "pnpm dlx prisma" on every start, which downloads the schema engine at runtime
+RUN node_modules/.bin/prisma --version
 
-WORKDIR /app/code
+RUN rm -rf /app/code/apps/frontend/.next/cache /app/code/node-compile-cache && \
+    ln -sf /run/postiz/next-cache /app/code/apps/frontend/.next/cache
 
-# renovate: datasource=github-releases depName=gitroomhq/postiz-app versioning=semver extractVersion=^v(?<version>.+)$
-ARG POSTIZ_VERSION=2.11.3
-RUN curl -L "https://github.com/gitroomhq/postiz-app/archive/refs/tags/v${POSTIZ_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /app/code
-
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN pnpm config set cache /run/npm-cache && \
-    pnpm config set userconfig /run/npm-config/npmrc
-
-RUN pnpm install && \
-    pnpm run build
-
-FROM base AS runner
-
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-ENV PATH=$PATH:/app/code/node_modules/.bin
-
-WORKDIR /app/code
-COPY --from=builder --chown=cloudron:cloudron /app/code/apps /app/code/apps
-COPY --from=builder --chown=cloudron:cloudron /app/code/.env.example /app/code/
-COPY --from=builder --chown=cloudron:cloudron /app/code/libraries /app/code/libraries
-COPY --from=builder --chown=cloudron:cloudron /app/code/node_modules /app/code/node_modules
-COPY --from=builder --chown=cloudron:cloudron /app/code/package.json /app/code/
-
-RUN ln -sf /run/postiz/env /app/code/.env
-
-# configure nginx
 RUN rm /etc/nginx/sites-enabled/* && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
-
 COPY nginx/postiz.conf /etc/nginx/sites-enabled/postiz.conf
 COPY nginx/readonlyrootfs.conf /etc/nginx/conf.d/readonlyrootfs.conf
 
+RUN sed -e 's,^logfile=.*$,logfile=/run/postiz/supervisord.log,' -i /etc/supervisor/supervisord.conf
 COPY supervisor/* /etc/supervisor/conf.d/
-RUN ln -sf /run/postiz/supervisord.log /var/log/supervisor/supervisord.log
 
-COPY start.sh /app/pkg/
+COPY start.sh temporal.sh /app/pkg/
 
 CMD [ "/app/pkg/start.sh" ]
