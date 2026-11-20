@@ -10,7 +10,7 @@ WORKDIR /app/code
 
 # must match engines.node - https://github.com/gitroomhq/postiz-app/blob/main/package.json
 # renovate: datasource=node-version depName=node
-ARG NODE_VERSION=22.23.4
+ARG NODE_VERSION=22.23.5
 RUN mkdir -p /usr/local/node-${NODE_VERSION} && curl -L https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz | tar zxf - --strip-components 1 -C /usr/local/node-${NODE_VERSION}
 ENV PATH=/usr/local/node-${NODE_VERSION}/bin:$PATH
 
