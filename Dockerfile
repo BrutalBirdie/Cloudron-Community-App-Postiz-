@@ -15,7 +15,7 @@ RUN mkdir -p /usr/local/node-${NODE_VERSION} && curl -L https://nodejs.org/dist/
 ENV PATH=/usr/local/node-${NODE_VERSION}/bin:$PATH
 
 # renovate: datasource=github-releases depName=temporalio/cli versioning=semver extractVersion=^v(?<version>.+)$
-ARG TEMPORAL_CLI_VERSION=1.9.1
+ARG TEMPORAL_CLI_VERSION=1.10.1
 RUN curl -L https://github.com/temporalio/cli/releases/download/v${TEMPORAL_CLI_VERSION}/temporal_cli_${TEMPORAL_CLI_VERSION}_linux_amd64.tar.gz | tar zxf - -C /usr/local/bin temporal
 
 COPY --from=postiz /app /app/code
