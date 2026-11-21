@@ -1,5 +1,5 @@
 # renovate: datasource=docker depName=ghcr.io/gitroomhq/postiz-app extractVersion=^v(?<version>.+)$
-ARG POSTIZ_VERSION=2.25.3
+ARG POSTIZ_VERSION=2.26.0
 
 FROM ghcr.io/gitroomhq/postiz-app:v${POSTIZ_VERSION} AS postiz
 
